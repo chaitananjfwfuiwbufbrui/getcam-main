@@ -1,1 +1,5 @@
 1.0 v -------------- getcam
+
+commit              desc
+
+ 0.1		- checking the connection between git repo
