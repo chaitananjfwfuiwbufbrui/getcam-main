@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+
+{% block title %}sign-up{% endblock title %}
+{% block body %}
+
+<div class="text-center h-100 align-items-center d-flex text-dark"
+  style="background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)); background-position: center center; background-size: cover; background-repeat: repeat;">
+  <div class="py-5 rounded w-50 container-fluid"
+    style="	background-image: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0));	background-position: top left;	background-size: 100%;	background-repeat: repeat;">
+    
+    <div class="row">
+      <div class="col-md-12 shadow-lg border rounded-0">
+
+
+        
+        <div class="row">
+          <div class="col-md-12"><img class="img-fluid d-block mx-auto mt-3 rounded"
+              src="{% static 'assets/Get Cam.png' %}" width="160"></div>
+        </div>
+        <div class="row">
+          <div class="mt-2 col-md-12" data-pingendo-transient="">
+            <p class="lead">Start Your Journey with Us for being One of the best content Creators&nbsp;</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="mt-2 col-md-12">
+
+
+
+            <form method="POST" id="c_form-h" class="my-login-validation" novalidate="">
+              {% csrf_token %}
+
+              
+
+              <div class="form-group row"> <label for="inputpasswordh" class="col-2 col-form-label">Username</label>
+                <div class="col-10">
+
+                  {{user_form.username}}
+                  
+                </div>
+              </div>
+
+              <div class="form-group row"> <label for="email" class="col-2 col-form-label">Email</label>
+                <div class="col-10">
+
+                  {{user_form.email}}
+                </div>
+              </div>
+              <div class="form-group row"> <label for="password" class="col-2 col-form-label">Password</label>
+                <div class="col-10">
+
+                  {{user_form.password}}
+                </div>
+              </div>
+              <div class="form-group row"> <label for="password2" class="col-2 col-form-label">re-enter password</label>
+                <div class="col-10">
+
+                  {{user_form.password2}}
+                </div>
+              </div>
+
+
+              <div class="form-group m-0">
+              </div><button type="submit" class="btn text-white btn-secondary w-25"><b
+                  class="text-white">Submit</b></button>
+          </div>
+        </div><a class="btn text-white btn-lg my-1 mb-3" href="#" style="background: rgb(59, 89, 152);"><i
+          class="fa fa-facebook fa-fw fa-1x py-1"></i><span class="text"><b>&nbsp;Facebook</b></span></a>
+        </div>
+        <div class="col-md-12 d-flex justify-content-end align-items-center">
+          Already have an account? <a class="btn btn-link" href="{% url 'login' %}">Login</a>
+        </div>
+      </form>
+    </div>
+
+
+
+
+
+    </div>
+  </div>
+</div>
+</div>
+{% endblock body %}
