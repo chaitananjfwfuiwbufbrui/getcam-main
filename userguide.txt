@@ -1,0 +1,30 @@
+make sure installed python and pip
+
+<------ run following commands ----->
+
+
+1. pip install -r requirements.txt
+
+2. cd getcam
+
+3. python manage.py runserver_plus --cert-file cert.crt 
+
+
+<------- server is on -------->
+
+
+4. python manage.py makemigrations
+
+5. python manage.py migrate 
+
+6. python manage.py makemigrations home
+
+7. python manage.py migrate home
+
+8. python manage.py makemigrations authentivcations
+
+9. python manage.py migrate authentivcations
+
+
+<----- following commands for creating tables in database ------>
+

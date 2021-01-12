@@ -21,4 +21,6 @@ from authentications.models import *
 
 
 def home(request):
+    if request.user.is_authenticated:
+        Profile.objects.get_or_create(user = request.user)
     return render(request,'html/main/index.html')

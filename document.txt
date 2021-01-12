@@ -12,3 +12,4 @@ commit              desc
 
  0.5		-social auth working
 
+ 0.51		- added requirements.txt and user guide files
