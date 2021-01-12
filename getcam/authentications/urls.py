@@ -10,7 +10,7 @@ from . import views
 from .views import verficationview
 
 urlpatterns = [
-    # path('', views.dashboard,name='dashboard'),
+    
     
     path('register/', views.register,name='register'),
     path('edit/', views.edit,name='edit'),
@@ -33,12 +33,12 @@ urlpatterns = [
 
     path('activate/<uidb64>/<token>/', verficationview.as_view(),name='activate'),
 
+# verifications are here
+    path('phone/', views.phone_number,name='phone'),
+    path('verify_number/', views.verify_number,name='verify-number'),
 
-#     path('phone/', views.phone_number,name='phone'),
-#     path('verify_number/', views.verify_number,name='verify-number'),
-
-# # 
-#     path('adhar/', views.adhar,name='adhar'),
+# 
+    path('adhar/', views.adhar,name='adhar'),
 ]
 
 

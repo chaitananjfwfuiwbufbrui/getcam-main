@@ -7,3 +7,6 @@ commit              desc
  0.2		- templates added login page and signup page backend handeled
 
  0.3 		- authentications completed and verification and profile views areon prograss
+
+ 0.4 		- verfication backends are working with no bugs 90% of auth app is completed 
+

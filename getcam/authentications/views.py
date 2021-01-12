@@ -28,7 +28,7 @@ from django.core.mail import EmailMessage
 from django.contrib.auth import  settings
 
 
-# from .otp import send_sms,gen_otp,sms_sender
+from .otp import send_sms,gen_otp,sms_sender
 
 
 
@@ -186,5 +186,130 @@ def profile(request):
 
 
 
+
+
+def phone_number(request):
+    
+    if request.method == 'POST':
+        user_form = UserEditForm(instance = request.user,data = request.POST)
+        profile_form = ProfileEditForm(instance = request.user.profile,data = request.POST,files = request.FILES)
+
+        if user_form.is_valid() and profile_form.is_valid():
+            
+            user_form.save()
+            profile_form.save()
+
+
+            #verfication stuff
+            user_of = Profile.objects.get(user=request.user)
+            
+            
+            sended_otp = otp_sender(uid_phone(user_of))
+            
+            user_of.otp = sended_otp
+            user_of.save()
+            
+            
+
+
+            otp = True
+            
+            return render(request,'html/auth/phone.html',{'otp':otp})
+        else:
+            
+            messages.error(request,profile_form.errors)
+
+    else:
+        user_form = UserEditForm(instance = request.user)
+        profile_form = ProfileEditForm(instance = request.user.profile)
+    return render(request,'html/auth/phone.html',{'profile_form':profile_form})
+
+
+def otp_sender(phone_number):
+   
+    genotp = gen_otp()
+    messages_otp = f'''
+            your verfication code  {genotp}
+    '''
+    
+    sms_sender(phone_number,messages_otp)
+    return genotp
+
+def message_sender(mes,phone_number):
+    
+    sms_sender(phone_number,mes)
+
+
+def verify_number(request):
+    user_of = Profile.objects.get(user=request.user)
+    
+
+    if request.method =="POST":
+        extracted_otp  = int(request.POST['otp'])
+        
+
+
+        if extracted_otp == user_of.otp:
+            user_of.phone_verified = True
+            user_of.save()
+            messages.success(request, 'Phone number verified')
+            mes =  f'''{request.user} Thanks for verifing your phone number !!! '''
+
+
+            message_sender(mes,uid_phone(user_of))
+            return redirect('home')
+
+        else:
+            messages.error(request, 'verification failed !!')
+
+    return redirect('home')
+#for convertion of phone number to send sms by api 
+def uid_phone(user_of):
+        x = [user_of.phone_number.country_code,user_of.phone_number.national_number]
+        numb = f'''+{x[0]}{x[1]}'''
+        return numb
+#adhar verification
+
+def adhar(request):
+    from .adhar import validateVerhoeff 
+    s =False
+    if request.method =="POST":
+        extracted_adharnumber  = (request.POST['extracted_adharnumber'])
+        x = extracted_adharnumber.replace(" ", "") 
+        s = validateVerhoeff(x)
+
+
+    
+        final_check = False
+        try:
+
+            sqwe = Profile.objects.filter(id_proof  = x)
+            print(sqwe,type(sqwe),list(sqwe))
+            qwe = list(sqwe)
+            print(len(qwe))
+            if len(qwe) < 1 :
+                final_check = True
+            else:
+                final_check = False
+                messages.info(request, 'adhar already exists')
+                return redirect('adhar')
+
+        except :
+            pass
+
+        if final_check and s:
+            user_of = Profile.objects.get(user=request.user)
+            user_of.profile_verified = True
+            user_of.id_proof = x
+            user_of.save()
+            messages.success(request, 'Profile verified  successfully')
+
+            return redirect('home')
+        else:
+            messages.info(request, 'Enter Correct Adhar Number')
+            return redirect('adhar')
+
+
+    return render(request,'html/auth/adhar.html')
 
 

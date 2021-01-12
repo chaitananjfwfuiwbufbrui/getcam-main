@@ -41,7 +41,7 @@
                         <h5 class="">{{user.phonenumber}}</h5>
                       </div>
                       <div class="col-md-5">
-                        <p class="text">add your phone n.o</p>
+                        <a class="text" href ="{% url 'phone' %}">click here to add your phone number</a>
                       </div>
                     </div>
 
@@ -62,7 +62,7 @@
                     {% else %}
                     <div class="row">
                       <div class="col-md-8">
-                        <a class="text">click here for profile verfication</a>
+                        <a class="text" href ="{% url 'adhar' %}">click here for profile verfication</a>
                         
 
                       </div>
