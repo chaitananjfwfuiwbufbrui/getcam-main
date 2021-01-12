@@ -13,7 +13,8 @@ urlpatterns = [
     # path('', views.dashboard,name='dashboard'),
     
     path('register/', views.register,name='register'),
-    # path('edit/', views.edit,name='edit'),
+    path('edit/', views.edit,name='edit'),
+    path('profile/', views.profile,name='profile'),
     
      
     path('login/', auth_views.LoginView.as_view(),name='login'),

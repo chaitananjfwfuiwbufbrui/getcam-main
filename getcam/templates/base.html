@@ -52,7 +52,7 @@
                         </a>
 
                         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink"> <a class="dropdown-item"
-                                href="#">Profile</a> <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a> </div>
+                                href="{% url 'profile' %}">Profile</a> <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a> </div>
                     </li>
                 </ul>
                 {% else %}
@@ -80,7 +80,9 @@
 
 
     {% endfor %}
-    {% block body %}{% endblock body %}
+    
+        {% block body %}{% endblock body %}
+  
     <div class="py-3">
         <div class="container">
             <div class="row">
