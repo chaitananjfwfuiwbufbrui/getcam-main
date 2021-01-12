@@ -10,3 +10,5 @@ commit              desc
 
  0.4 		- verfication backends are working with no bugs 90% of auth app is completed 
 
+ 0.5		-social auth working
+
