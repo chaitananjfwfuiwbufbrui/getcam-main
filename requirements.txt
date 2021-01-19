@@ -133,7 +133,7 @@ terminado==0.9.1
 testpath==0.4.4
 threadpoolctl==2.1.0
 toml
-traitlets==5.0.5
+traitlets
 twilio==6.50.1
 urllib3==1.25.10
 validate-email==1.3
