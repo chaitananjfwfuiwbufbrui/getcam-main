@@ -92,7 +92,6 @@ psycopg2==2.8.6
 py==1.10.0
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
-PyAudio @ file:///C:/Users/PIDUGU/Downloads/PyAudio-0.2.11-cp38-cp38-win32.whl
 PyAutoGUI==0.9.52
 pycodestyle==2.6.0
 pycparser==2.20
