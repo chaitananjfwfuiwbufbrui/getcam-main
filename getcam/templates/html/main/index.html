@@ -1,0 +1,597 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Home{% endblock title %}
+{% block style %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+  type="text/css">
+<link rel="stylesheet" href="{% static 'index.css' %}">
+<style>
+  .ebook-popup-sec {
+    -webkit-box-shadow: 0px 10px 20px 0px rgba(50, 50, 50, 0.52);
+    -moz-box-shadow: 0px 10px 20px 0px rgba(50, 50, 50, 0.52);
+    box-shadow: 0px 10px 20px 0px rgba(50, 50, 50, 0.52);
+  }
+
+  .ebook-popup-sec {
+    color: #fff;
+    background: #e8da5f;
+    width: 720px;
+    height: 479px;
+    margin: 30px auto;
+    padding: 110px 60px 50px 60px;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
+    font-family: 'Montserrat', sans-serif;
+  }
+
+  .ebook-popup-sec h4 {
+    color: #b6b6b6;
+    margin: 0 0 25px 0;
+    padding: 0px 11px;
+    font-size: 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1px;
+    position: absolute;
+    bottom: 0;
+  }
+
+  .ebook-popup-sec h3 {
+    margin: 0 0 20px 0;
+    padding: 0px;
+    font-size: 15px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+
+  .ebook-popup-sec h2 {
+    margin: 0 0 50px 0;
+    padding: 0px;
+    font-size: 22px;
+    letter-spacing: 4px;
+    font-weight: 600;
+    text-decoration: underline;
+    text-transform: uppercase;
+  }
+
+  .ebook-email-sec {
+    margin: 0px;
+    padding: 0px;
+    width: 100%;
+    float: left;
+  }
+
+  .ebook-popup-sec .ebookemail-input {
+    width: 400px;
+    border: none;
+    margin-right: 10px;
+    padding: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    box-sizing: border-box;
+  }
+
+  .ebook-popup-sec .ebookemail-input:focus,
+  .ebook-popup-sec .ebook-cls-btn,
+  .ebook-popup-sec .ebook-input-btn {
+    outline: none;
+  }
+
+  .ebook-popup-sec .ebook-input-btn {
+    width: 150px;
+    background: #ffff00;
+    cursor: pointer;
+    margin: 0px;
+    padding: 16px 16px;
+    margin-left: 10px;
+    border: 0px;
+    font-family: 'Krona One', sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    color: #000;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    box-sizing: border-box;
+    -webkit-box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.27);
+    box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.27);
+    -webkit-transition: all 0.4s;
+    transition: all 0.4s;
+  }
+
+  .ebook-popup-sec .ebook-input-btn:hover {
+    background: #de1154;
+  }
+
+  .ebook-popup-sec .ebook-cls-btn {
+    font-size: 14px;
+    line-height: 18px;
+    width: 28px;
+    height: 28px;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #FFF;
+    position: absolute;
+    right: -14px;
+    top: -14px;
+    border: 0px;
+    -webkit-box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.27);
+    box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.27);
+    cursor: pointer;
+  }
+
+  .ebook-popup-sec .ebook-cls-btn:hover {
+    background: #01ffff;
+    color: #000;
+  }
+
+  .popup-graybox {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 99999;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    box-sizing: border-box;
+    overflow: auto;
+  }
+
+  @media only screen and (max-width:815px) {
+    .ebook-popup-sec {
+      width: 90%;
+      padding: 110px 40px 50px 40px;
+    }
+
+    .ebook-popup-sec .ebookemail-input {
+      width: 65%;
+    }
+
+    .ebook-popup-sec .ebook-input-btn {
+      width: 24%;
+    }
+  }
+
+  @media only screen and (max-width:675px) {
+    .ebook-popup-sec .ebookemail-input {
+      width: 60%;
+    }
+
+    .ebook-popup-sec .ebook-input-btn {
+      width: 30%;
+    }
+  }
+
+  @media only screen and (max-width:480px) {
+    .ebook-popup-sec h2 {
+      margin: 0 0 30px 0;
+      padding: 0px;
+      font-size: 14px;
+      letter-spacing: 1px;
+    }
+
+    .ebook-popup-sec {
+      padding-left: 25px;
+      padding-right: 25px;
+      padding: 40px 30px 67px 30px;
+      height: 298px;
+    }
+
+    .ebook-popup-sec h4 {
+      color: #007373;
+      margin: 0 26px 10px 0;
+      font-size: 9px;
+    }
+
+    .ebook-popup-sec .ebookemail-input {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 12px;
+    }
+
+    .ebook-popup-sec .ebook-input-btn {
+      width: 100%;
+      padding: 8px 16px;
+      margin: 0;
+    }
+  }
+
+  @media only screen and (max-width:480px) {
+    .ebook-popup-sec h2 {
+      margin: 0 0 20px 0;
+      font-size: 11px;
+    }
+  }
+</style>
+
+<!-- Bootstrap CSS -->
+{% endblock style %}
+
+{% block body %}
+
+
+<div class="py-5 text-center text-md-right"
+  style="	background-image: url(&quot;https://wallpapercave.com/wp/wp7852843.jpg&quot;);	background-position: right bottom;	background-size: cover;	background-repeat: repeat;	background-attachment: fixed;">
+  <div class="container">
+    <div class="row">
+      <div class="p-5 mx-auto mx-md-0 ml-md-auto col-10 col-md-9">
+        <h3 class="display-3 text-white"><b>Any One Can Be Influencer</b></h3>
+        <p class="mb-3 lead text-white">Helping Content creators to be the best..!!</p>
+
+
+        <form action="{% url 'search' %}" method="post" class="form-inline d-flex justify-content-end">
+          {% csrf_token %}
+          <div class="input-group shadow-lg rounded-lg">
+            <input type="search" class="form-control form-control-lg" placeholder="Search Your Gear" name="search"
+              id="products">
+            <div class="input-group-append"> <button class="btn btn-secondary" type="submit">Search</button> </div>
+          </div>
+        </form>
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="text-secondary">Trending Gear</h1>
+      </div>
+    </div>
+
+
+
+    <div class="row">
+      {% for la in latest %}
+      <div class="col-md-3">
+
+        <div class="card shadow-lg">
+          <a href="single/{{la.slug}}">
+            <img class="card-img-top" src="{{la.product_image.url}}" alt="Card image cap">
+          </a>
+
+          <div class="card-body">
+            <h4 class="card-title">{{la.product_name}}</h4>
+            <p class="card-text">{{la.desc}}
+              .</p> <a href="single/{{la.slug}}" class="btn btn-secondary"><b>{{la.prize}}$</b></a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+
+
+
+
+
+</div>
+
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <section class="popup-graybox">
+        <div class="ebook-popup-sec"
+          style="background: #e8da5f url(https://images.unsplash.com/photo-1597939001150-4d20b4c4a8d6?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=754&q=80) no-repeat center center;background-size: cover;">
+          <h3 data-edit="text">Launch offer</h3>
+          <h2 data-edit="text">Rs.100/- off on first 10 cameras</h2>
+          <div class="ebook-email-sec">
+
+            <form action="{% url 'email_subscribe' %}" method="post">
+              {% csrf_token %}
+              <input type="email" class="ebookemail-input" name="subscribe_email" data-edit="placeholder" placeholder="Enter your email id">
+              <button class="ebook-input-btn" type="submit">subscribe</button>
+            </form>
+
+            <form action="{% url 'home' %}" method="post">
+
+              {% csrf_token %}
+              <input type="hidden" value="close" name="close">
+            <button class="ebook-cls-btn close-btn" type="submit" >X</button>
+            </form>
+          </div>
+          <h4 data-edit="text">terms and conditions apply, and we promise, we wont span your inbox</h4>
+        </div>
+      </section>
+
+      <!-- <section class="popup-graybox">
+        <div class="welcome-popup-sec">
+          <div class="welcome-content">
+            <div class="welcome-offer-sec2" style="background: #fff;">
+              <img src="{% static 'assets/pics/email_icon.png' %}" alt="">
+            </div>
+            <div class="welcome-offer-sec1" style="background: #fff;">
+              <h2 data-edit="text">subscribe</h2>
+              <h4 data-edit="text">Subscribe to our new arrivals, exclusive offers <span>and much more? enter email
+                  address below</span></h4>
+            </div>
+            <ul>
+              <li>
+
+                <form action="{% url 'email_subscribe' %}" method="post">
+
+                  {% csrf_token %}
+                  <input type="email" required placeholder="Enter your email address here..." name="subscribe_email"
+                    data-edit="placeholder">
+                  <button class="welcome-submit-btn" type="submit">Subscribe</button>
+                </form>
+              </li>
+            </ul>
+            <h6 data-edit="text">Terms and Conditions Apply, We Promise We Dont Span Your Inbox</h6>
+          </div>
+          <form action="{% url 'home' %}" method="post">
+
+            {% csrf_token %}
+            <input type="hidden" value="close" name="close">
+
+            <!-- <button type="submit" class="welcome-cls-btn close-btn" data-dismiss="modal">X</button> -->
+            <!-- <button type="submit" class="welcome-cls-btn close-btn">X</button>
+          </form> --> -->
+        </div>
+      </section>
+
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container">
+
+
+
+
+  <div class="row">
+    <div class="col-md-12 d-flex justify-content-center mt-3"><a class="btn btn-outline-secondary" href="#">View
+        all</a>
+    </div>
+  </div>
+</div>
+</div>
+<div class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <h1 class="text-secondary">Plan BIG, While we help you with</h1>
+      </div>
+    </div>
+  </div>
+  <div class="container shadow-lg rounded-lg">
+    <div class="row">
+      <div class="col-md-12 text-center">
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-lg-4 col-md-2 p-4">
+        <div class="row">
+          <div class="col-3 p-0 d-flex align-items-center justify-content-center"><i
+              class="fa fa-3x d-flex align-items-center justify-content-center fa-globe text-secondary"></i></div>
+          <div class="col-9">
+            <p class="lead mb-1 text-primary"> <b>Over 2K+ Products</b></p>
+            <p class="mb-0">Over 2M Gears and 1000s of Verified vendors Across the Globe.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-2 p-4">
+        <div class="row">
+          <div class="col-3 p-0 d-flex align-items-center justify-content-center"><i
+              class="fa fa-3x d-flex align-items-center justify-content-center fa-dollar text-secondary"></i></div>
+          <div class="col-9">
+            <p class="lead mb-1 text-primary"> <b>Only 2% Investment</b></p>
+            <p class="mb-0">Only 2% of Your Investment in Production work and Amazing Offers in the Post Work.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-2 p-4">
+        <div class="row">
+          <div class="col-3 p-0 d-flex align-items-center justify-content-center"><i
+              class="fa fa-3x d-flex align-items-center justify-content-center fa-check text-secondary"></i></div>
+          <div class="col-9">
+            <p class="lead mb-1 text-primary"><b>Speed Verification</b></p>
+            <p class="mb-0">Authentication and verification Done in Minutes using Advanced tech.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-2 p-4">
+        <div class="row">
+          <div class="col-3 p-0 d-flex align-items-center justify-content-center"><i
+              class="fa fa-3x d-flex align-items-center justify-content-center fa-clock-o text-secondary"></i></div>
+          <div class="col-9">
+            <p class="lead mb-1 text-primary"> <b>Long Rentals</b></p>
+            <p class="mb-0">Long Time Rental with Shot Renwal Fee with Best prices For High end Gear.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-2 p-4">
+        <div class="row">
+          <div class="col-3 p-0 d-flex align-items-center justify-content-center"><i
+              class="fa fa-3x d-flex align-items-center justify-content-center fa-refresh text-secondary"></i></div>
+          <div class="col-9">
+            <p class="lead mb-1 text-primary"> <b>Ease Upgradation</b></p>
+            <p class="mb-0">Upgrading to latest tech savy equipment for you Quality in Content Creation.</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-2 p-4">
+        <div class="row">
+          <div class="col-3 p-0 d-flex align-items-center justify-content-center"><i
+              class="fa fa-3x d-flex align-items-center justify-content-center fa-truck text-secondary"></i></div>
+          <div class="col-9">
+            <p class="lead mb-1 text-primary"> <b>Home Delivery</b></p>
+            <p class="mb-0">Delivery made easy and Affordable with Powerful Logistics.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="py-5 text-center">
+  <div class="container-fluid">
+    <div class="row text-muted">
+      <div class="col-md-2 col-4 p-2"> <i class="d-block fa fa-3x fa-trophy"></i> </div>
+      <div class="col-md-2 col-4 p-2"> <i class="d-block fa fa-3x fa-star"></i> </div>
+      <div class="col-md-2 col-4 p-2"> <i class="d-block fa fa-3x fa-shield"></i> </div>
+      <div class="col-md-2 col-4 p-2"> <i class="d-block fa fa-3x fa-american-sign-language-interpreting"></i> </div>
+      <div class="col-md-2 col-4 p-2"> <i class="d-block fa fa-3x fa-check-circle"></i> </div>
+      <div class="col-md-2 col-4 p-2"> <i class="d-block fa fa-3x fa-copyright"></i> </div>
+    </div>
+  </div>
+</div>
+<div class="py-3">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 p-3">
+        <div class="card">
+          <div class="card-body p-4 shadow-lg">
+            <p class="mb-3">I throw myself down among the tall grass by the trickling stream; and, as I lie close to the
+              earth, a thousand unknown plants are noticed by me: when I hear the buzz of the little world.</p>
+            <div class="row">
+              <div class="col-lg-2 col-3"> <img class="img-fluid d-block rounded-circle"
+                  src="https://static.pingendo.com/img-placeholder-2.svg"> </div>
+              <div class="col-lg-10 col-9 d-flex align-items-center">
+                <p class="my-2">J. W. Goethe <i>CEO</i> </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ml-auto col-md-6 p-3">
+        <div class="card">
+          <div class="card-body p-4 shadow-lg">
+            <p class="mb-3">Then, my friend, when darkness overspreads my eyes, and heaven and earth seem to dwell in my
+              soul and absorb its power, like the form of a beloved mistress, then I often think with longing.</p>
+            <div class="row">
+              <div class="col-lg-2 col-3"> <img class="img-fluid d-block rounded-circle"
+                  src="https://static.pingendo.com/img-placeholder-3.svg"> </div>
+              <div class="col-lg-10 col-9 d-flex align-items-center">
+                <p class="my-2">G. W. John&nbsp; <i>Co-founder</i> </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-6 p-3">
+        <div class="card">
+          <div class="card-body p-4 shadow-lg">
+            <p class="mb-3">I throw myself down among the tall grass by the trickling stream; and, as I lie close to the
+              earth, a thousand unknown plants are noticed by me: when I hear the buzz of the little world.</p>
+            <div class="row">
+              <div class="col-lg-2 col-3"> <img class="img-fluid d-block rounded-circle"
+                  src="https://static.pingendo.com/img-placeholder-2.svg"> </div>
+              <div class="col-lg-10 col-9 d-flex align-items-center">
+                <p class="my-2">J. W. Goethe <i>CEO</i> </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="ml-auto col-md-6 p-3">
+        <div class="card">
+          <div class="card-body p-4 shadow-lg">
+            <p class="mb-3">Then, my friend, when darkness overspreads my eyes, and heaven and earth seem to dwell in my
+              soul and absorb its power, like the form of a beloved mistress, then I often think with longing.</p>
+            <div class="row">
+              <div class="col-lg-2 col-3"> <img class="img-fluid d-block rounded-circle"
+                  src="https://static.pingendo.com/img-placeholder-3.svg"> </div>
+              <div class="col-lg-10 col-9 d-flex align-items-center">
+                <p class="my-2">G. W. John&nbsp; <i>Co-founder</i> </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="py-5 text-center">
+  <div class="container-fluid">
+    <div class="row text-muted">
+      <div class="col-md-2 col-4 p-2"> <i class="d-block fa fa-3x fa-facebook"></i> </div>
+      <div class="col-md-2 col-4 p-2"> <i class="d-block fa fa-3x fa-youtube"></i> </div>
+      <div class="col-md-2 col-4 p-2"> <i class="d-block fa fa-3x fa-instagram"></i> </div>
+      <div class="col-md-2 col-4 p-2"> <i class="d-block fa fa-3x fa-vimeo"></i> </div>
+      <div class="col-md-2 col-4 p-2"> <i class="d-block fa fa-3x fa-linkedin"></i> </div>
+      <div class="col-md-2 col-4 p-2"> <i class="d-block fa fa-500px fa-3x"></i> </div>
+    </div>
+  </div>
+</div>
+<div class="py-5 text-white text-left"
+  style="	background-image: linear-gradient(to bottom, rgba(0, 0, 0, .50), rgba(0, 0, 0, .50)), url(&quot;https://i.insider.com/5508aa21ecad040707441700?width=1100&amp;format=jpeg&amp;auto=webp&quot;);	background-position: center, center;	background-size: cover;	background-repeat, background-attachment: fixed;">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8 mx-auto">
+        <h1 class="mb-3 text-warning">Take a Step forward to be the Best</h1>
+        <a class="btn btn-secondary ml-1" href="{% url 'register' %}"><b>Sign Up</b></a>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+{% endblock body %}
+
+{% block scripts %}
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+  integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+  integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+<script>
+
+
+
+  $(function () {
+
+    $("#products").autocomplete({
+      source: "{% url 'search' %}"
+    });
+  });
+</script>
+{% if user.is_authenticated %}
+Welcome Back, {{ username }}
+<div>
+  {% else %}
+  {% if popup %}
+    
+  
+
+  <script>
+    var myVar = setInterval(myFunction, 3000);
+    function myFunction() {
+      $('#exampleModalCenter').modal('show');
+
+    }
+  </script>
+  {% endif %}
+  {% endif %}
+
+  {% endblock scripts %}

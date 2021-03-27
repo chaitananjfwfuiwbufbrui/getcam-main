@@ -1,0 +1,32 @@
+1.0 v -------------- getcam
+
+commit              desc
+
+ 0.1		- checking the connection between git repo
+	
+ 0.2		- templates added login page and signup page backend handeled
+
+ 0.3 		- authentications completed and verification and profile views areon prograss
+
+ 0.4 		- verfication backends are working with no bugs 90% of auth app is completed 
+
+ 0.5		-social auth working
+
+ 0.51		- added requirements.txt and user guide files
+
+ 0.6 		-added home page ,product page, single productpage,search function & about page
+
+ 0.7		- cart and single product javascript is added
+
+ 0.8 		- paypal gateway checkout page all are updated
+
+ 0.9 		- everything is working
+
+ <----------- 1st version completed --------------->
+
+
+ 1.1 		- pop up  added 
+
+ 1.2		- pop updated and bug on single product page is solved
+
+ 1.3 		- prizing algo has been set and prize chart is availble
