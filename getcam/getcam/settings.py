@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     #install apps
     'authentications',
     'main',
+    'merchant',
 
 
 
