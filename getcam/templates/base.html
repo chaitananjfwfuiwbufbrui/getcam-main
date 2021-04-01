@@ -87,12 +87,12 @@
 
 
                             {% if chay %}
-                            <a class="dropdown-item" href="{% url 'logout' %}">view marchant account </a>
+                            <a class="dropdown-item" href="/merchant/">view marchant account </a>
 
                             {% else %}
 
 
-                            <a class="dropdown-item" href="{% url 'logout' %}">switch to merchant account </a>
+                            <a class="dropdown-item" href="{% url 'merchant' %}">switch to merchant account </a>
 
                             {% endif %}
                             <a class="dropdown-item" href="{% url 'logout' %}">Log Out</a>

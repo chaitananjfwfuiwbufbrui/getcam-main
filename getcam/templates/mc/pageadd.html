@@ -1,0 +1,108 @@
+{% extends "mc/index.html" %}
+{% block body %}
+
+
+<div class="container-fluid">
+    <h3 class="text-dark mb-4">{{products.product_name}}</h3>
+    <div class="row mb-3">
+        <div class="col-lg-4">
+            <div class="card mb-3">
+                <div class="card-body text-center shadow">
+                    <img class="rounded-circle mb-3 mt-4" src="{{products.product_image.url}}" width="160" height="160">
+                    {% for i in images %}
+
+                    <img class="rounded-circle mb-3 mt-4" src="{{i.product_image.url}}" width="160" height="160">
+                    {% endfor %}
+
+                    <div class="mb-3"><button class="btn btn-primary btn-sm" type="button">Add Photo</button></div>
+                </div>
+
+            </div>
+
+            <div class="card shadow mb-4">
+
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div class="row mb-3 d-none">
+                <div class="col">
+                    <div class="card text-white bg-primary shadow">
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <p class="m-0">Peformance</p>
+                                    <p class="m-0"><strong>65.2%</strong></p>
+                                </div>
+                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
+                            </div>
+                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="card text-white bg-success shadow">
+                        <div class="card-body">
+                            <div class="row mb-2">
+                                <div class="col">
+                                    <p class="m-0">Peformance</p>
+                                    <p class="m-0"><strong>65.2%</strong></p>
+                                </div>
+                                <div class="col-auto"><i class="fas fa-rocket fa-2x"></i></div>
+                            </div>
+                            <p class="text-white-50 small m-0"><i class="fas fa-arrow-up"></i>&nbsp;5% since last month
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <div class="card shadow mb-3">
+                        <div class="card-header py-3">
+                            <p class="text-primary m-0 font-weight-bold">Product detailes</p>
+                            <i class="icon-edit">edit</i>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="form-row">
+                                    <label for="username"><strong>Product Name:</strong></label>
+                                    <label for="username">{{products.product_name}}</label>
+
+                                </div>
+                                <div class="form-row">
+                                    <label for="username"><strong>Prize:</strong></label>
+                                    <label for="username">{{products.prize}}</label>
+
+                                </div>
+                                <div class="form-row">
+                                    <label for="username"><strong>Prize:</strong></label>
+                                    <label for="username">{{products.category}}</label>
+
+                                </div>
+                                <div class="form-row">
+                                    <label for="username"><strong>Prize:</strong></label>
+                                    <label for="username">{{products.sub_category}}</label>
+
+                                </div>
+                                <div class="form-row">
+                                    <label for="username"><strong>Prize:</strong></label>
+                                    <label for="username">{{products.desc}}</label>
+
+                                </div>
+                                <div class="form-row">
+                                    <label for="username"><strong>Dates:</strong></label>
+                                    <label for="username">{{products.pub_date}} - {{products.expire_date}}</label>
+
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock body %}
