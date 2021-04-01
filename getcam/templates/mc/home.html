@@ -1,6 +1,6 @@
 {% extends "mc/index.html" %}
 {% block tittle %}
-  Home
+  Dash Board
 {% endblock tittle %}
 {% block body %}
 <div class="container-fluid">
@@ -43,6 +43,7 @@
                       <td>{{i.pub_date}} - {{i.expire_date}}</td>
                       <td>
                         
+                        <a href="/merchant/edit_product/{{i.slug}}"><i class="icon-edit">edit</i></a>
                         <a href="product_view/{{i.slug}}">
                           view
                         </a>

@@ -1,6 +1,6 @@
 {% extends "mc/index.html" %}
 {% block tittle %}
-{{products.product_name}} | view
+{{products.product_name}} | Edit
 {% endblock tittle %}
 {% block body %}
 
@@ -64,40 +64,46 @@
                     <div class="card shadow mb-3">
                         <div class="card-header py-3">
                             <p class="text-primary m-0 font-weight-bold">Product detailes</p>
-                            <a href="/merchant/edit_product/{{products.slug}}"><i class="icon-edit">edit</i></a>
+                            
                         </div>
                         <div class="card-body">
-                            <form>
+                            <form  method="post" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                
                                 <div class="form-row">
-                                    <label for="username"><strong>Product Name:</strong></label>
-                                    <label for="username">{{products.product_name}}</label>
+                                    <label for="username"><strong>Product name:</strong></label>
+                                    <label for="username">{{product_form.product_name}}</label>
 
                                 </div>
                                 <div class="form-row">
-                                    <label for="username"><strong>Prize:</strong></label>
-                                    <label for="username">{{products.prize}}</label>
+                                    <label for="username"><strong>Prize :</strong></label>
+                                    <label for="username">{{product_form.prize}}</label>
 
                                 </div>
                                 <div class="form-row">
-                                    <label for="username"><strong>Prize:</strong></label>
-                                    <label for="username">{{products.category}}</label>
+                                    <label for="username"><strong>catagiory:</strong></label>
+                                    <label for="username">{{product_form.category}}</label>
 
                                 </div>
                                 <div class="form-row">
-                                    <label for="username"><strong>Prize:</strong></label>
-                                    <label for="username">{{products.sub_category}}</label>
+                                    <label for="username"><strong>subcatagiory:</strong></label>
+                                    <label for="username">{{product_form.sub_category}}</label>
 
                                 </div>
                                 <div class="form-row">
-                                    <label for="username"><strong>Prize:</strong></label>
-                                    <label for="username">{{products.desc}}</label>
+                                    <label for="username"><strong>description:</strong></label>
+                                    <label for="username">{{product_form.desc}}</label>
 
                                 </div>
                                 <div class="form-row">
                                     <label for="username"><strong>Dates:</strong></label>
-                                    <label for="username">{{products.pub_date}} - {{products.expire_date}}</label>
+                                    <label for="username">{{product_form.pub_date}} - {{product_form.expire_date}}</label>
 
                                 </div>
+                                <button type="submit" class="btn btn-primary btn-block">
+                                    save
+                                </button>
+                            </form>
                         </div>
                     </div>
                 </div>
