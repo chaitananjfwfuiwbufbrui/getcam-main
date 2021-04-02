@@ -227,7 +227,10 @@ def singleproduct(request,slug):
         # <______done _________>
 
         checkone  = prize_chart.objects.filter(product_slug = single)
-       
+        print(checkone.reverse()[0],"sc")
+        ses = checkone.order_by('-id')[:7]
+        
+        # print(sos,type(sos))
         for i in range(delta.days + 1):
             day = sdate + timedelta(days=i)
             sos = str(day)
@@ -284,7 +287,7 @@ def singleproduct(request,slug):
             if q in newcat:
                 newcat.remove(q)
         
-        context = {'single' : single,"faq":faq,"reviews_count":reviews_count,"review_obj":reviews,"prod":new_list,"catagory":newcat,'cartitems':cartitems,"imageya":imageya,"all_obj":all_obj,"already_ther":already_ther,'prize':ceil(prize[0]),'discount': prize[2],'availbe_dates_list':availbe_dates_list,'days':days,'checkone':checkone,'single_prize':single_prize}
+        context = {'single' : single,"faq":faq,"reviews_count":reviews_count,"review_obj":reviews,"prod":new_list,"catagory":newcat,'cartitems':cartitems,"imageya":imageya,"all_obj":all_obj,"already_ther":already_ther,'prize':ceil(prize[0]),'discount': prize[2],'availbe_dates_list':availbe_dates_list,'days':days,'checkone':ses,'single_prize':single_prize}
         return render(request,'html/main/singleproduct.html',context)
 
     else:

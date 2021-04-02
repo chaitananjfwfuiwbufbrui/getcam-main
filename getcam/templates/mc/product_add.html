@@ -1,6 +1,6 @@
 {% extends "mc/index.html" %}
 {% block tittle %}
-{{products.product_name}} | Edit
+Add Product
 {% endblock tittle %}
 {% block body %}
 
@@ -9,28 +9,17 @@
     <h3 class="text-dark mb-4">{{products.product_name}}</h3>
     <div class="row mb-3">
         <div class="col-lg-4">
+            <form method="post" action = "{% url 'product_add' %}"enctype="multipart/form-data" >
+            {% csrf_token %}
             <div class="card mb-3">
                 <div class="card-body text-center shadow">
-                    <img class="rounded-circle mb-3 mt-4" src="{{products.product_image.url}}" width="160" height="160">
-                    {% for i in imageya %}
-
-                    <img class="rounded-circle mb-3 mt-4" src="{{i.product_image.url}}" width="160" height="160">
                     
-                    
-                    {% endfor %}
-                    <form method="post" action = "/merchant/addimg/{{products.slug}}"enctype="multipart/form-data" >
-                        {% csrf_token %}
-                        <input class="file-upload-input" type='file' name = "product_images1"  />
-                        
-                        
-                        <button type="submit">Submit</button>
-                    </form>
+                    <input class="file-upload-input" type='file' name = "product_images"  />
 
-                    <!-- <div class="mb-3"><button class="btn btn-primary btn-sm" type="button">Add Photo</button></div> -->
+                    <div class="mb-3"><button class="btn btn-primary btn-sm" type="button">Add Photo</button></div>
                 </div>
 
             </div>
-
 
             <div class="card shadow mb-4">
 
@@ -77,43 +66,48 @@
 
                         </div>
                         <div class="card-body">
-                            <form method="post" enctype="multipart/form-data">
-                                {% csrf_token %}
+                            <!-- <form method="post" action = "{% url 'product_add' %}" > -->
+                                
 
                                 <div class="form-row">
-                                    <label for="username"><strong>Product name:</strong></label>
-                                    <label for="username">{{product_form.product_name}}</label>
-
+                                    <label for="username"><strong>Product name:  </strong></label>
+                                    <input type="text" name= "product_name">
+                                    
                                 </div>
                                 <div class="form-row">
                                     <label for="username"><strong>Prize :</strong></label>
-                                    <label for="username">{{product_form.prize}}</label>
-
+                                    <input type="text" name= "Prize">
+                                    
+                                    
                                 </div>
                                 <div class="form-row">
                                     <label for="username"><strong>catagiory:</strong></label>
-                                    <label for="username">{{product_form.category}}</label>
-
+                                    <input type="text" name= "catagiory">
+                                    
+                                    
                                 </div>
                                 <div class="form-row">
                                     <label for="username"><strong>subcatagiory:</strong></label>
-                                    <label for="username">{{product_form.sub_category}}</label>
-
+                                    <input type="text" name= "subcatagiory">
+                                    
+                                    
                                 </div>
                                 <div class="form-row">
                                     <label for="username"><strong>description:</strong></label>
-                                    <label for="username">{{product_form.desc}}</label>
-
+                                    <input type="text" name= "description">
+                                    
+                                    
                                 </div>
                                 <div class="form-row">
                                     <label for="username"><strong>Dates:</strong></label>
-                                    <label id="date" for="username">{{product_form.pub_date}} -
-                                        {{product_form.expire_date}}</label>
+                                    <input type="text" name= "pub_date"> - 
+                                    <input type="text" name= "expire_date">
+                                    
 
                                 </div>
                                 
                                 <button type="submit" class="btn btn-primary btn-block">
-                                    save
+                                    Submit
                                 </button>
                             </form>
                         </div>
@@ -129,7 +123,6 @@
 
 
 
-
 {% endblock body %}
 {% block js %}
 <link href="http://code.jquery.com/ui/1.11.3/themes/smoothness/jquery-ui.css" rel="stylesheet">
@@ -137,7 +130,7 @@
 <script src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
 <script>
 
-    var disableddates = "[03-4-2020]";
+    var disableddates = "03-4-2020";
     function DisableSpecificDates(date) {
         var string = jQuery.datepicker.formatDate('dd-mm-yy', date);
         return [!(disableddates.indexOf(string) == -1)];

@@ -11,8 +11,10 @@
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i">
     <link rel="stylesheet" href="{% static 'mc/fonts/fontawesome-all.min.css' %}">
     <link rel="stylesheet" href="{% static 'mc/css/untitled.css' %}">
+    {% block css %}{% endblock css %}
     
 <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
 </head>
 
 <body id="page-top">
@@ -25,9 +27,9 @@
                 </a>
                 <hr class="sidebar-divider my-0">
                 <ul class="nav navbar-nav text-light" id="accordionSidebar">
-                    <li class="nav-item" role="presentation"><a class="nav-link active" href="index.html"><i
+                    <li class="nav-item" role="presentation"><a class="nav-link {% block active %}{% endblock active %}" href="{% url 'merchant' %}"><i
                                 class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
-                    <li class="nav-item" role="presentation"><a class="nav-link" href="profile.html"><i
+                    <li class="nav-item" role="presentation"><a class="nav-link {% block sactive %}{% endblock sactive %}" href="{% url 'dash' %}"><i
                                 class="fas fa-user"></i><span>your products</span></a></li>
                     <li class="nav-item" role="presentation"><a class="nav-link" href="table.html"><i
                                 class="fas fa-table"></i><span>Table</span></a></li>
@@ -207,6 +209,7 @@
                 </footer>
             </div><a class="border rounded d-inline scroll-to-top" href="#page-top"><i class="fas fa-angle-up"></i></a>
         </div>
+        {% block js %}{% endblock js %}
         <script src="{% static 'mc/js/jquery.min.js' %}"></script>
         <script src="{% static 'mc/bootstrap/js/bootstrap.min.js' %}"></script>
         <script src="{% static 'mc/js/chart.min.js' %}"></script>
