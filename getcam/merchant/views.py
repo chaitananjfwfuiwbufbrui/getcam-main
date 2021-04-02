@@ -3,7 +3,7 @@ from main.models import *
 from authentications.models import *
 from .forms import *
 # Create your views here.
-
+from .models import *
 
 def home(request):
     user = request.user
@@ -87,4 +87,19 @@ def addimg(request,slug):
 
     return redirect('edit_product',slug)
 def dash(request):
-    return render(request,'mc/dashboard.html')
+    pro = mechant.objects.get(mechant=request.user ) 
+    print(pro.completed_orders)
+    s = ['JANUARY', 'FEBRUARY', 'MARCH', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'DECEMBER']
+    for i in range(12):
+        print(i,s[i])
+        mon = monthly_revunue.objects.get_or_create(merchant=pro,month = s[i],revunue=0)
+    mon = monthly_revunue.objects.filter(merchant=pro)
+    print(mon)
+    datalabeles = []
+    for i in mon:
+        print(i.month,":",i.revunue)
+        datalabeles.append(i.revunue) 
+    print(datalabeles)   
+    datalabeless = [0, 10, 5, 25, 20, 300, 45]
+    context = {'datalabeles':datalabeles,"datalabeless":datalabeless}
+    return render(request,'mc/dashboard.html',context)

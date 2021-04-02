@@ -1,8 +1,9 @@
 {% extends "mc/index.html" %}
 {% block tittle %}
-  Dash Board
+  All Product
 {% endblock tittle %}
-{% block active %}active{% endblock active %}
+
+{% block sactive %}active{% endblock sactive %}
 {% block body %}
 <div class="container-fluid">
   
@@ -35,6 +36,7 @@
                       </tr>
                   </thead>
                   <tbody>
+                    
                     {% for i in products  %}
                     
                     
