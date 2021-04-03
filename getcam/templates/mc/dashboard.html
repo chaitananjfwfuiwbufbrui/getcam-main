@@ -15,7 +15,7 @@ DashBoard
                             <div class="text-uppercase text-primary font-weight-bold text-xs mb-1">
                                 <span>Earnings (monthly)</span>
                             </div>
-                            <div class="text-dark font-weight-bold h5 mb-0"><span>$40,000</span></div>
+                            <div class="text-dark font-weight-bold h5 mb-0"><span>{{month_revnues}}</span></div>
                         </div>
                         <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
                     </div>
@@ -30,9 +30,9 @@ DashBoard
                             <div class="text-uppercase text-success font-weight-bold text-xs mb-1">
                                 <span>Earnings (annual)</span>
                             </div>
-                            <div class="text-dark font-weight-bold h5 mb-0"><span>$215,000</span></div>
+                            <div class="text-dark font-weight-bold h5 mb-0"><span>{{year_revnue}}</span></div>
                         </div>
-                        <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        <div class="col-auto"><i class="fas fa-rupee-sign fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
@@ -49,17 +49,10 @@ DashBoard
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
                                     <div class="text-dark font-weight-bold h5 mb-0 mr-3">
-                                        <span>50%</span>
+                                        <span>{{orders}}</span>
                                     </div>
                                 </div>
-                                <div class="col">
-                                    <div class="progress progress-sm">
-                                        <div class="progress-bar bg-info" aria-valuenow="50" aria-valuemin="0"
-                                            aria-valuemax="100" style="width: 50%;">
-                                            <span class="sr-only">50%</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                
                             </div>
                         </div>
                         <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
@@ -76,7 +69,7 @@ DashBoard
                             <div class="text-uppercase text-warning font-weight-bold text-xs mb-1">
                                 <span>Pending Requests</span>
                             </div>
-                            <div class="text-dark font-weight-bold h5 mb-0"><span>18</span></div>
+                            <div class="text-dark font-weight-bold h5 mb-0"><span>{{shedule_orders}}</span></div>
                         </div>
                         <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
                     </div>
@@ -106,6 +99,7 @@ DashBoard
                 </div>
                 <div class="card-body">
                     <canvas id="myChart"></canvas>
+                    <canvas id="myChart1"></canvas>
                     
                 </div>
             </div>
@@ -187,17 +181,29 @@ DashBoard
         data: {
             labels:['JANUARY', 'FEBRUARY', 'MARCH', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'DECEMBER'],
             datasets: [{
-                label: 'My First dataset',
+                label: 'Monthly Revenue',
                 backgroundColor: 'rgba(78, 115, 223, 0.05)',
                 borderColor: 'rgba(78, 115, 223, 1)',
                 data: {{datalabeles}}
-            },
+            }
+            ]
+        },
+    });
+    var ctx1 = document.getElementById('myChart1').getContext('2d');
+    var chart = new Chart(ctx1, {
+        // The type of chart we want to create
+        type: 'line',
+
+        // The data for our dataset
+        data: {
+            labels:['JANUARY', 'FEBRUARY', 'MARCH', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'DECEMBER'],
+            datasets: [
             {
-                label: 'My second dataset',
+                label: 'No of orders',
                 backgroundColor: 'rgba(78, 115, 223, 0.05)',
                 borderColor: '#c23616',
                 data: {{datalabeless}}
-            }]
+            }],
         },
 
         // Configuration options go here

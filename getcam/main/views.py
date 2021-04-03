@@ -5,6 +5,7 @@ from django.shortcuts import render
 from math import ceil
 import json
 import  datetime
+from merchant.models import *
 # Create your views here.
 from django.shortcuts import render,HttpResponse,redirect
 from main.models import *
@@ -390,6 +391,23 @@ def processorder(request):
     order.complete = True
     order.save()
 
+    #merchant prblm
+    s = Orderitems.objects.filter(order = order)
+    sosso = ['JANUARY', 'FEBRUARY', 'MARCH', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'DECEMBER']
+    current_date = date.today() 
+    sa = current_date.month
+    present_month = sosso[sa-1]
+    for i in s:
+        merchant  = i.product.provider
+        print(merchant)
+        pro = mechant.objects.get(mechant=merchant) 
+        # print(pro)
+        swq = monthly_revunue.objects.get(merchant=pro,month=present_month)
+        swq.no_of_orders += 1
+        swq.revunue += i.product.prize
+        swq.save()
+
+
     if order.complete == True:
         ShippingOrder.objects.create(
             customer = customer,
@@ -421,12 +439,21 @@ def checkout(request):
 
 def testcheck(request):
     
-    # data = json.loads(request.body)
-    # count=request.body['count']
+    orders = Order.objects.filter(customer=request.user,complete=True).first()
+    # s = Orderitems.objects.filter(order = order)
+    s = Orderitems.objects.filter(order = orders)
+    
+    for i in s:
+        merchant  = i.product.provider
+        print(merchant)
+        pro = mechant.objects.get(mechant=merchant) 
+        # print(pro)
+        swq = monthly_revunue.objects.get(merchant=pro,month="April")
+        swq.no_of_orders += 1
+        swq.save()
 
-    print("hello")
 
-    # print("count status ",count)
+    
     return render(request,'html/main/test2.html')
 
     

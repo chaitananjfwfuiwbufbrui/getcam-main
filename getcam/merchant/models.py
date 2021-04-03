@@ -41,3 +41,7 @@ class monthly_revunue(models.Model):
     )
     month = models.CharField(max_length=9,choices=MONTH_CHOICES)
     revunue = models.IntegerField(default=0)
+    year = models.IntegerField(default=0)
+    no_of_orders = models.IntegerField(default=0)
+    def __str__(self):
+                return f"year:{self.year} , month : {self.month},merchant : {self.merchant}" 

@@ -87,19 +87,37 @@ def addimg(request,slug):
 
     return redirect('edit_product',slug)
 def dash(request):
-    pro = mechant.objects.get(mechant=request.user ) 
-    print(pro.completed_orders)
+    from datetime import date
+# creating the date object of today's date
     s = ['JANUARY', 'FEBRUARY', 'MARCH', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'DECEMBER']
+    current_date = date.today() 
+    sa = current_date.month
+    
+    present_month = s[sa-1]
+    pro = mechant.objects.get(mechant=request.user ) 
+    # print(pro.completed_orders)
     for i in range(12):
-        print(i,s[i])
-        mon = monthly_revunue.objects.get_or_create(merchant=pro,month = s[i],revunue=0)
+        
+        mon = monthly_revunue.objects.get_or_create(merchant=pro,month = s[i],year=2021)
     mon = monthly_revunue.objects.filter(merchant=pro)
-    print(mon)
+    # print(mon)
     datalabeles = []
+    datalabeless = []
+    monthly_revun = monthly_revunue.objects.filter(merchant=pro,month=present_month,year=2021).first()
+    # print(monthly_revun.revunue)
+    month_revnues = monthly_revun.revunue
+    year_revnue = 0
+    orders = 0
     for i in mon:
-        print(i.month,":",i.revunue)
+        # print(i.month,":",i.revunue)
         datalabeles.append(i.revunue) 
-    print(datalabeles)   
-    datalabeless = [0, 10, 5, 25, 20, 300, 45]
-    context = {'datalabeles':datalabeles,"datalabeless":datalabeless}
+        year_revnue += i.revunue
+        datalabeless.append(i.no_of_orders)
+        orders += i.no_of_orders
+    pro.total_order = orders
+    pro.revunue = year_revnue
+    pro.save()
+    shedule_orders = orders - pro.completed_orders
+    print(year_revnue)   
+    context = {'datalabeles':datalabeles,"datalabeless":datalabeless,"month_revnues":month_revnues,"year_revnue":year_revnue,"orders":orders,"shedule_orders":shedule_orders}
     return render(request,'mc/dashboard.html',context)
