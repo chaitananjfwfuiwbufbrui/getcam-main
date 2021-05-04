@@ -34,7 +34,6 @@ class products(models.Model):
         return self.product_name +"         catagiory:   " +self.category + "subcatagiry :   "+ self.sub_category
 
 
-
 class images_fiels(models.Model):
     product = models.ForeignKey(products,on_delete=models.SET_NULL,blank=True,null=True)
     product_image =models.ImageField(upload_to="shop/images",default="")
@@ -90,6 +89,10 @@ class Order(models.Model):
         total = sum([item.quantity for item in orderitemss])
         return  total
 
+class requested_delivary(models.Model):
+    product = models.ForeignKey(products,on_delete=models.SET_NULL,blank=True,null=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+    customer = models.ForeignKey(User,on_delete=models.SET_NULL,blank=True,null=True)    
 
 class   Orderitems(models.Model):
     product = models.ForeignKey(products,on_delete=models.SET_NULL,blank=True,null=True)

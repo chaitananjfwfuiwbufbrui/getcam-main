@@ -41,18 +41,18 @@ def userlogin(request):
             if user is not None:
                 if user.is_active:
                     login(request,user)
-                    messages.primary(request, 'welcome ')
-                    return HttpResponse("authantication successfull")
-                else:
-                    messages.primary(request, 'please conform your account ')
+                    messages.info(request, 'welcome ')
                     
-                    return HttpResponse("disabled account")
+                else:
+                    messages.error(request, 'please conform your account ')
+                    
+                    # return HttpResponse("disabled account")
             else:
-                messages.primary(request, 'please conform your account ')
-                return HttpResponse("invalid login")
+                messages.error(request, 'account not exist ')
+                
     else:
         form = loginform()
-    return render(request,'html/auth/login.html',{'form':form})
+    return render(request,'registration/login.html',{'form':form,})
 
 
 def register(request):
@@ -67,7 +67,7 @@ def register(request):
                     new_user.set_password(user_form.cleaned_data['password'])
                     new_user.is_active = False
                     new_user.save()
-                    Profile.objects.create(user = new_user,id_proof = "45641")
+                    Profile.objects.create(user = new_user,id_proof = "45641",phone_number=user_form.cleaned_data['phonenumber'])
                     email = user_form.cleaned_data['email']
 
 
@@ -76,23 +76,23 @@ def register(request):
                     email_verify_send(new_user,request,email)
                     messages.success(request, 'Account successfully created')
                     messe = "Account successfully created"
-                    return render(request,'html/auth/login.html',{'new_user':new_user,'messe':messe})
+                    return redirect("login")
                 else:
                     messages.error(request,"account is already exist please try again")
                     errorr = True
                     messe = "Try Again with another email"
-                    return render(request,'html/auth/login.html',{'errorr':errorr,'messe':messe})
+                    return render(request,'phone/login.html',{'errorr':errorr,'messe':messe})
 
             else:
                 messages.error(request,"account is already exist please try again")
                 errorr = True
                 messe = "Try Again"
-                return render(request,'html/auth/signup.html',{'errorr':errorr,'messe':messe})
+                return render(request,'phone/register.html',{'errorr':errorr,'messe':messe})
         else:
             user_form = UserRegistrationForm()
             
      
-            return render(request,'html/auth/signup.html',{'user_form' : user_form})
+            return render(request,'phone/register.html',{'user_form' : user_form})
 
 # email send using trading
 
@@ -261,6 +261,7 @@ def verify_number(request):
 
         else:
             messages.error(request, 'verification failed !!')
+            redirect('phone')
 
     return redirect('home')
 #for convertion of phone number to send sms by api 

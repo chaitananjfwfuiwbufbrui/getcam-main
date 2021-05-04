@@ -11,24 +11,23 @@ def send_sms(account_sid, auth_token,body,from_,to_):
 
 def sms_sender(number,message):
         
-    import  requests
-    url = "https://http-api.d7networks.com/send"
-    querystring = {
-    "username":"lvqd5462",
-    "password":"1jwUcuxe",
-    "from":"Test%20SMS",
-    "content":f"{message}",
-    "dlr-method":"POST",
-    "dlr-url":"https://4ba60af1.ngrok.io/receive",
-    "dlr":"yes",
-    "dlr-level":"3",
-    "to":f"{number}"
+    import vonage
+
+
+    client = vonage.Client(key="770e1739", secret="1kFCJ5FTDbGYthM5")
+    sms = vonage.Sms(client)
+    responseData = sms.send_message(
+    {
+        "from": "getcam",
+        "to": f'{number}',
+        "text": f'{message}',
     }
-    headers = {
-    'cache-control': "no-cache"
-    }
-    response = requests.request("GET", url, headers=headers, params=querystring)
-    print(response.text)
+    )
+
+    if responseData["messages"][0]["status"] == "0":
+        print("Message sent successfully.")
+    else:
+        print(f"Message failed wit")
 
 
 
@@ -43,4 +42,23 @@ def gen_otp():
     return otp
 
 
+def check():
+    import vonage
 
+
+    client = vonage.Client(key="770e1739", secret="1kFCJ5FTDbGYthM5")
+    sms = vonage.Sms(client)
+    responseData = sms.send_message(
+    {
+        "from": "getcam",
+        "to": "919063917425",
+        "text": "namaste",
+    }
+    )
+
+    if responseData["messages"][0]["status"] == "0":
+        print("Message sent successfully.")
+    else:
+        print(f"Message failed with error: {responseData['messages'][0]['error-text']}")
+# check()
+# sms_sender(+919063917425, "message")

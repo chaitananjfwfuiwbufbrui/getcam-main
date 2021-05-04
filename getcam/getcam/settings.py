@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/3.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.1/ref/settings/
 """
-
+import django_heroku
 from pathlib import Path,os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.sites',
     'django_extensions',
-
+    'widget_tweaks',
     #install apps
     'authentications',
     'main',
@@ -97,13 +97,22 @@ WSGI_APPLICATION = 'getcam.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'tW3DERIuxH',
+        'USER': 'tW3DERIuxH',
+        'PASSWORD': 'f0IaSURvUb',
+        'HOST': 'remotemysql.com',
+        'PORT': '3306',
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -165,7 +174,8 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = '587'
 EMAIL_HOST_USER = 'kc508275@gmail.com'
 # DEFAULT_FROM_EMAIL = 'kc508275@gmail.com'
-EMAIL_HOST_PASSWORD = '2001kc2005'
+EMAIL_HOST_PASSWORD = '9063917425kc2001'
 EMAIL_USE_TLS =True
 
 
+django_heroku.settings(locals())

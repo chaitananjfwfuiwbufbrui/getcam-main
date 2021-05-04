@@ -1,109 +1,565 @@
-{% extends "base.html" %}
+{% load crispy_forms_tags %} {% load widget_tweaks %} {% load static %}
+<html lang="en">
 
-{% load socialaccount %}
-{% providers_media_js %}
+<head>
+    <style type="text/css">
+        span.iconify,
+        i.iconify,
+        iconify-icon {
+            display: inline-block;
+            width: 1em;
+        }
+    </style>
+    <style id="react-native-stylesheet"></style>
+    <meta charset="utf-8">
+    <link rel="shortcut icon" href="/favicon.ico">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#000000">
+    <script src="{% static 'dialog.js' %}"></script>
+    <title>Login</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", " Poppins", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        code {
+            font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+        }
+    </style>
+    <style type="text/css">
+        @font-face {
+            src: url(/static/media/FontAwesome.b06871f2.ttf);
+            font-family: FontAwesome;
+        }
+        
+        @font-face {
+            src: url(/static/media/Entypo.744ce600.ttf);
+            font-family: Entypo;
+        }
+        
+        @font-face {
+            src: url(/static/media/Octicons.8e7f807e.ttf);
+            font-family: Octicons;
+        }
+        
+        @font-face {
+            src: url(/static/media/SimpleLineIcons.d2285965.ttf);
+            font-family: SimpleLineIcons;
+        }
+        
+        @font-face {
+            src: url(/static/media/MaterialIcons.a37b0c01.ttf);
+            font-family: MaterialIcons;
+        }
+        
+        @font-face {
+            src: url(/static/media/EvilIcons.140c53a7.ttf);
+            font-family: EvilIcons;
+        }
+        
+        @font-face {
+            src: url(/static/media/Feather.ca9ce9ff.ttf);
+            font-family: Feather;
+        }
+        
+        @font-face {
+            src: url(/static/media/Ionicons.b2e0fc82.ttf);
+            font-family: Ionicons;
+        }
+        
+        @font-face {
+            src: url(/static/media/MaterialCommunityIcons.6acc7d6c.ttf);
+            font-family: MaterialCommunityIcons;
+        }
+    </style>
+    <style data-styled="" data-styled-version="4.4.1">
+        /* sc-component-id: sc-bdVaJa */
+        /* sc-component-id: sc-bwzfXH */
+        /* sc-component-id: sc-htpNat */
+        /* sc-component-id: sc-bxivhb */
+        /* sc-component-id: sc-ifAKCX */
+        /* sc-component-id: sc-EHOje */
+        /* sc-component-id: sc-bZQynM */
+        /* sc-component-id: sc-gzVnrw */
+        /* sc-component-id: sc-htoDjs */
+        /* sc-component-id: sc-dnqmqq */
+        /* sc-component-id: sc-iwsKbI */
+        /* sc-component-id: sc-gZMcBi */
+        /* sc-component-id: sc-gqjmRU */
+        /* sc-component-id: sc-VigVT */
+        /* sc-component-id: sc-jTzLTM */
+        /* sc-component-id: sc-fjdhpX */
+        /* sc-component-id: sc-jzJRlG */
+        /* sc-component-id: sc-cSHVUG */
+        /* sc-component-id: sc-kAzzGY */
+        /* sc-component-id: sc-chPdSV */
+        /* sc-component-id: sc-kgoBCf */
+        /* sc-component-id: sc-kGXeez */
+        /* sc-component-id: sc-kpOJdX */
+        /* sc-component-id: sc-dxgOiQ */
+        /* sc-component-id: sc-ckVGcZ */
+        /* sc-component-id: sc-jKJlTe */
+        /* sc-component-id: sc-eNQAEJ */
+        /* sc-component-id: sc-hMqMXs */
+        /* sc-component-id: sc-kEYyzF */
+        /* sc-component-id: sc-kkGfuU */
+        /* sc-component-id: sc-iAyFgw */
+        /* sc-component-id: sc-hSdWYo */
+        /* sc-component-id: sc-eHgmQL */
+        /* sc-component-id: sc-cvbbAY */
+        /* sc-component-id: sc-jWBwVP */
+        /* sc-component-id: sc-brqgnP */
+        /* sc-component-id: sc-cMljjf */
+        /* sc-component-id: sc-jAaTju */
+        /* sc-component-id: sc-jDwBTQ */
+        /* sc-component-id: sc-gPEVay */
+    </style>
+    <style data-styled="" data-styled-version="4.4.1">
+        /* sc-component-id: sc-iRbamj */
+        /* sc-component-id: sc-jlyJG */
+        /* sc-component-id: sc-gipzik */
+        /* sc-component-id: sc-csuQGl */
+        /* sc-component-id: sc-Rmtcm */
+        /* sc-component-id: sc-bRBYWo */
+        /* sc-component-id: sc-hzDkRC */
+        /* sc-component-id: sc-jhAzac */
+        /* sc-component-id: sc-fBuWsC */
+        /* sc-component-id: sc-fMiknA */
+        /* sc-component-id: sc-dVhcbM */
+        /* sc-component-id: sc-eqIVtm */
+        /* sc-component-id: sc-fAjcbJ */
+        /* sc-component-id: sc-caSCKo */
+        /* sc-component-id: sc-gisBJw */
+        /* sc-component-id: sc-kjoXOD */
+        /* sc-component-id: sc-cHGsZl */
+        /* sc-component-id: sc-TOsTZ */
+        /* sc-component-id: sc-kgAjT */
+        /* sc-component-id: sc-cJSrbW */
+        /* sc-component-id: sc-ksYbfQ */
+        /* sc-component-id: sc-hmzhuo */
+        /* sc-component-id: sc-frDJqD */
+        /* sc-component-id: sc-kvZOFW */
+        /* sc-component-id: sc-hqyNC */
+        /* sc-component-id: sc-jbKcbu */
+        /* sc-component-id: sc-dNLxif */
+        /* sc-component-id: sc-jqCOkK */
+        
+        .gOOHpL {
+            display: block;
+            background: none;
+            height: 100%;
+            width: 100%;
+            text-align: center;
+            border: none;
+        }
+        /* sc-component-id: sc-uJMKN */
+        
+        .gDMEAx {
+            font-family: Poppins;
+            top: 215px;
+            left: 136px;
+            pos: absolute;
+            font-style: normal;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 1);
+            font-size: 36px;
+            width: 325px;
+            height: 112px;
+        }
+        /* sc-component-id: sc-bbmXgH */
+        
+        .lfZAMr {
+            font-family: Poppins;
+            top: 145px;
+            left: 136px;
+            pos: absolute;
+            font-style: normal;
+            font-weight: 400;
+            color: rgba(255, 0, 0, 1);
+            font-size: 50px;
+            width: 165px;
+            height: 74px;
+        }
+        /* sc-component-id: sc-gGBfsJ */
+        
+        .jWnfst {
+            z-index: -1;
+            top: 0px;
+            left: 0px;
+            width: 461px;
+            height: 327px;
+            pos: absolute;
+        }
+        /* sc-component-id: sc-jnlKLf */
+        
+        .hBHqDr {
+            font-family: Poppins;
+            top: 131px;
+            left: -20px;
+            font-style: normal;
+            font-weight: 400;
+            color: #121212;
+            height: 39px;
+            width: 100%;
+            border-width: 0px;
+            border-color: rgba(197, 197, 197, 1);
+            border-style: solid;
+            border-radius: 5px;
+            background: transparent;
+            box-shadow: 3px 3px 14px 0.5px rgba(0, 0, 0, 1);
+        }
+        /* sc-component-id: sc-fYxtnH */
+        
+        .iqfyn {
+            font-family: Poppins;
+            top: 194px;
+            left: -20px;
+            font-style: normal;
+            font-weight: 400;
+            color: #121212;
+            height: 39px;
+            width: 100%;
+            border-width: 1px;
+            border-color: rgba(197, 197, 197, 1);
+            border-style: solid;
+            border-radius: 5px;
+            background: transparent;
+            box-shadow: 3px 3px 14px 0.51px rgba(0, 0, 0, 1);
+        }
+        /* sc-component-id: sc-tilXH */
+        
+        .gJkhkk {
+            top: 279px;
+            width: 80%;
+            margin-top: 10%;
+            margin-left: 10%;
+            margin-right: 10%;
+            height: 100%;
+            pos: absolute;
+        }
+        /* sc-component-id: sc-hEsumM */
+        
+        a:-webkit-any-link {
+            text-decoration: none;
+        }
+        
+        .blPPmj {
+            width: 100%;
+            height: 100%;
+        }
+        /* sc-component-id: sc-ktHwxA */
+        
+        .fSKXBo {
+            font-family: Poppins;
+            top: 0px;
+            left: 9px;
+            pos: absolute;
+            font-style: normal;
+            font-weight: 400;
+            color: rgba(20, 0, 255, 1);
+        }
+        /* sc-component-id: sc-cIShpX */
+        
+        .iTsuUe {
+            top: 14px;
+            left: 0px;
+            width: 104px;
+            height: 17px;
+            pos: absolute;
+            border-radius: 5px;
+            border: none;
+        }
+        /* sc-component-id: sc-kafWEX */
+        
+        .fyePqg {}
+        /* sc-component-id: sc-feJyhm */
+        
+        .kepyPb {
+            text-align: center;
+            height: 38px;
+            background-color: rgba(255, 0, 0, 1);
+            border-width: 1px;
+            border-color: rgba(255, 0, 0, 1);
+            border-radius: 5px;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            border-style: solid;
+        }
+        /* sc-component-id: sc-iELTvK */
+        
+        .feMBqF {
+            font-family: Poppins;
+            font-style: normal;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 1);
+            font-size: 23px
+        }
+    </style>
+    <style data-styled="" data-styled-version="4.4.1">
+        /* sc-component-id: sc-cmTdod */
+        
+        .iTYPSK {
+            text-align: center;
+            height: 38px;
+            background-color: rgba(31, 3, 251, 1);
+            border-width: 1px;
+            border-color: rgba(255, 0, 0, 1);
+            border-radius: 5px;
+            -webkit-flex-direction: row;
+            -ms-flex-direction: row;
+            flex-direction: row;
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            border-style: solid;
+        }
+        /* sc-component-id: sc-jwKygS */
+        
+        .bxaZJR {
+            font-family: Poppins;
+            font-style: italic;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 1);
+            font-size: 12px;
+            margin-top: 9px;
+        }
+        /* sc-component-id: sc-btzYZH */
+        
+        .fhGEHm {
+            font-family: Poppins;
+            font-style: normal;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 1);
+            font-size: 23px;
+            margin-left: 2px;
+        }
+        /* sc-component-id: sc-lhVmIH */
+        
+        .fsDqXV {
+            text-align: center;
+            ;
+            height: 34px;
+        }
+        /* sc-component-id: sc-bYSBpT */
+        /* sc-component-id: sc-elJkPf */
+        /* sc-component-id: sc-jtRfpW */
+        /* sc-component-id: sc-kTUwUJ */
+        /* sc-component-id: sc-dqBHgY */
+        /* sc-component-id: sc-gxMtzJ */
+        /* sc-component-id: sc-dfVpRl */
+        /* sc-component-id: sc-gzOgki */
+        /* sc-component-id: sc-iyvyFf */
+        /* sc-component-id: sc-hwwEjo */
+        /* sc-component-id: sc-kPVwWT */
+        /* sc-component-id: sc-kfGgVZ */
+        /* sc-component-id: sc-esjQYD */
+        /* sc-component-id: sc-kIPQKe */
+        /* sc-component-id: sc-eXEjpC */
+        /* sc-component-id: sc-ibxdXY */
+        /* sc-component-id: sc-RefOD */
+        /* sc-component-id: sc-iQKALj */
+        /* sc-component-id: sc-bwCtUz */
+        /* sc-component-id: sc-hrWEMg */
+        /* sc-component-id: sc-eTuwsz */
+        /* sc-component-id: sc-gwVKww */
+        /* sc-component-id: sc-hXRMBi */
+        /* sc-component-id: sc-epnACN */
+        /* sc-component-id: sc-iQNlJl */
+        /* sc-component-id: sc-bsbRJL */
+        /* sc-component-id: sc-hZSUBg */
+        /* sc-component-id: sc-cMhqgX */
+        /* sc-component-id: sc-iuJeZd */
+        /* sc-component-id: sc-esOvli */
+        /* sc-component-id: sc-cmthru */
+        /* sc-component-id: sc-hMFtBS */
+        /* sc-component-id: sc-cLQEGU */
+        /* sc-component-id: sc-gqPbQI */
+        /* sc-component-id: sc-hORach */
+        /* sc-component-id: sc-bMVAic */
+    </style>
+    <style data-styled="" data-styled-version="4.4.1">
+        /* sc-component-id: sc-bAeIUo */
+        /* sc-component-id: sc-iujRgT */
+        /* sc-component-id: sc-GMQeP */
+        /* sc-component-id: sc-exAgwC */
+        /* sc-component-id: sc-cQFLBn */
+        /* sc-component-id: sc-gojNiO */
+        /* sc-component-id: sc-daURTG */
+        /* sc-component-id: sc-bXGyLb */
+        /* sc-component-id: sc-lkqHmb */
+        /* sc-component-id: sc-eLExRp */
+        /* sc-component-id: sc-cbkKFq */
+        /* sc-component-id: sc-krvtoX */
+        /* sc-component-id: sc-fYiAbW */
+        /* sc-component-id: sc-fOKMvo */
+        /* sc-component-id: sc-dUjcNx */
+        /* sc-component-id: sc-gHboQg */
+        /* sc-component-id: sc-eilVRo */
+        /* sc-component-id: sc-eerKOB */
+        /* sc-component-id: sc-emmjRN */
+        /* sc-component-id: sc-cpmLhU */
+        /* sc-component-id: sc-dymIpo */
+        /* sc-component-id: sc-bnXvFD */
+        /* sc-component-id: sc-gFaPwZ */
+        /* sc-component-id: sc-fhYwyz */
+        /* sc-component-id: sc-jzgbtB */
+        /* sc-component-id: sc-gJWqzi */
+        /* sc-component-id: sc-rBLzX */
+        /* sc-component-id: sc-bMvGRv */
+        /* sc-component-id: sc-CtfFt */
+        /* sc-component-id: sc-laTMn */
+        /* sc-component-id: sc-hGoxap */
+        /* sc-component-id: sc-fjmCvl */
+        /* sc-component-id: sc-TFwJa */
+        /* sc-component-id: sc-bHwgHz */
+        /* sc-component-id: sc-krDsej */
+        /* sc-component-id: sc-dTdPqK */
+        /* sc-component-id: sc-itybZL */
+        /* sc-component-id: sc-eMigcr */
+        /* sc-component-id: sc-fzsDOv */
+        /* sc-component-id: sc-gPWkxV */
+    </style>
+    <style data-styled="" data-styled-version="4.4.1">
+        /* sc-component-id: sc-jVODtj */
+        /* sc-component-id: sc-kUaPvJ */
+        /* sc-component-id: sc-giadOv */
+        /* sc-component-id: sc-fONwsr */
+        /* sc-component-id: sc-VJcYb */
+        /* sc-component-id: sc-ipXKqB */
+        /* sc-component-id: sc-hmXxxW */
+        /* sc-component-id: sc-cqCuEk */
+        /* sc-component-id: sc-dliRfk */
+        /* sc-component-id: sc-kLIISr */
+        /* sc-component-id: sc-qrIAp */
+        /* sc-component-id: sc-iqzUVk */
+        /* sc-component-id: sc-ipZHIp */
+        /* sc-component-id: sc-iGrrsa */
+        /* sc-component-id: sc-bmyXtO */
+        /* sc-component-id: sc-dEoRIm */
+        /* sc-component-id: sc-jtggT */
+        /* sc-component-id: sc-ebFjAB */
+        /* sc-component-id: sc-jKVCRD */
+        /* sc-component-id: sc-kaNhvL */
+        /* sc-component-id: sc-LKuAh */
+        /* sc-component-id: sc-iBEsjs */
+    </style>
+    <style type="text/css">
+        @font-face {
+            font-family: "poppins-regular";
+            src: url(/static/media/poppins-regular.8b6af8e5.ttf) format("truetype");
+        }
+        
+        @font-face {
+            font-family: "poppins-700";
+            src: url(/static/media/poppins-700.a3e0b5f4.ttf) format("truetype");
+        }
+        
+        @font-face {
+            font-family: "poppins-300";
+            src: url(/static/media/poppins-300.f6ea751e.ttf) format("truetype");
+        }
+        
+        @font-face {
+            font-family: "roboto-700";
+            src: url(/static/media/roboto-700.9ece5b48.ttf) format("truetype");
+        }
+        
+        @font-face {
+            font-family: "roboto-regular";
+            src: url(/static/media/roboto-regular.f36638c2.ttf) format("truetype");
+        }
+        
+        @font-face {
+            font-family: "poppins-600";
+            src: url(/static/media/poppins-600.4cdacb8f.ttf) format("truetype");
+        }
+        
+        @font-face {
+            font-family: "poppins-700italic";
+            src: url(/static/media/poppins-700italic.09775bde.ttf) format("truetype");
+        }
+        
+        @font-face {
+            font-family: "poppins-800";
+            src: url(/static/media/poppins-800.544fa4f2.ttf) format("truetype");
+        }
+        
+        @font-face {
+            font-family: "poppins-500";
+            src: url(/static/media/poppins-500.f61a4eb2.ttf) format("truetype");
+        }
+    </style>
+</head>
 
-{% load crispy_forms_tags %}
-{% block title %}log-in{% endblock title %}
-
-{% load static %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-{% block body %}
-
-<div class="py-5 text-center text-white h-100 d-flex align-items-center" style="">
-    <div class="container">
-
-
-
-        <div class="row">
-            <div class="col-md-12">
-                <h3 class="text-dark display-4">Welcome Back Dear..!!</h3>
-            </div>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root" style="position:relative;overflow:hidden;">
+        <link rel="stylesheet" href="{% static 'dialog.CSS' %}">
+        <div class="sc-bwzfXH jRMAka" id="al" style=" position:absolute;left: 40%; grid-template-rows: 80% 20%; top: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%);">
+            <div class="sc-htpNat lleoLv" id="data">Lorem Ipsum</div>
+            <div class="sc-ifAKCX jFqbfb" onclick="fun(0,' ')" style="width:100%;background-color:blue;;margin-left:0px;text-align:center;padding-top:5px;padding-bottom:5px">Okay</div>
         </div>
-        <div class="row">
-            <div class="col-md-5"><img class="img-fluid d-block mx-auto"
-                    src="https://st2.depositphotos.com/1001599/8225/v/600/depositphotos_82258324-stock-illustration-photographer-standing-preparing-his-camera.jpg"
-                    width="395"></div>
-            <div class="shadow-lg col-md-7 w-75 border-0 rounded-lg">
-                <div class="row rounded">
-                    <div class="col-md-12 pt-2 mt-2">
-                        <h1 class="mb-5"><b class="text-dark">Login&nbsp;</b></h1>
-                    </div>
+        {% for message in messages %} {% if messages %}
+        <script>
+            fun(1, '{{message}}')
+        </script>
+        {% endif %} {% endfor %}
+
+        <div class="sc-hEsumM blPPmj">
+
+            <div class="sc-tilXH gJkhkk"><span class="sc-bbmXgH lfZAMr">Hola,</span><br/>
+                <span class="sc-uJMKN gDMEAx">Happy to <br/>
+                    see you back..!!</span><br/><br/>
+                <div style=""><br/><br/>
+                    <form id="c_form-h" action="{% url 'login' %}" method="post">
+                        {% csrf_token %} {{ form.username |add_class:"sc-jnlKLf hBHqDr"}}<br/><br/> {{ form.password |add_class:"sc-fYxtnH iqfyn"}}<br/><br/>
+                        <div class="sc-kafWEX fyePqg">
+                            <a href="/Signup">
+                                <div class="sc-cIShpX iTsuUe"><button class="sc-jqCOkK gOOHpL"></button></div>
+                            </a>
+                        </div>
+                        <a href="/Untitled">
+                            <div class="sc-feJyhm kepyPb"><button type="submit" class="sc-jqCOkK gOOHpL"><span class="sc-iELTvK feMBqF">Lets Go.!!</span></button></div>
+                    </form>
+                    </a>
+                    <a href="/auth/register">
+                        <div class="sc-cmTdod iTYPSK">
+                            <button class="sc-jqCOkK gOOHpL">
+                        <div class="sc-lhVmIH fsDqXV" style="text-align:center;"><span class="sc-jwKygS bxaZJR">new here..??</span><span class="sc-btzYZH fhGEHm">Sign Up</span></div>
+                    </button>
+                        </div>
+                    </a>
+                    <a href="/auth/password_reset/">
+                        <button style="background-color:transparent;border:none;color:blue; width:100% ;text-align:center ;margin-bottom:50px;margin-top:20px;">
+                            Forgot Pass?
+                        </button>
+                    </a>
                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-
-
-
-                        <form id="c_form-h" action="{% url 'login' %}" method="post">
-                            {% csrf_token %}
-                            <div class="form-group row"> <label for="inputmailh"
-                                    class="col-2 col-form-label text-dark text-left">Username</label>
-                                <div class="col-10">
-                                    {{ form.username }}
-
-
-                                </div>
-                            </div>
-                            <div class="form-group row"> <label for="inputpasswordh"
-                                    class="col-2 col-form-label text-dark">Password</label>
-                                <div class="col-10">
-                                    {{ form.password }}
-                                    <!--  <input type="password" class="form-control" id="inputpasswordh" placeholder="Password">  -->
-                                </div>
-                            </div>
-                            <ul class="nav d-flex align-items-end justify-content-end">
-                                <li class="nav-item text-dark">
-                                    <a href="{% url 'password_reset'%}" class="nav-link active">forgot password ?</a>
-                                </li>
-                            </ul>
-                            <ul class="nav d-flex align-items-end justify-content-end">
-                                <li class="nav-item text-dark">
-                                    <a href="{% url 'register'%}" class="nav-link">don't have account </a>
-                                </li>
-                            </ul>
-                            <button type="submit"
-                                class="btn rounded-lg border shadow-sm text-center btn-secondary w-25"><b>Submit</b></button>
-                        </form>
-
-                    </div>
-
-
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <p class="text-dark">(Or)</p>
-                    </div>
-                </div>
-                
-                <div id="social">
-                                
-                    <a class="facebookBtn smGlobalBtn" href="{% provider_login_url "facebook" method="oauth2" %}" ></a>
-
-                  
-                </div>
-                   
-                
             </div>
+
+
         </div>
+
     </div>
-</div>
 
+    <!--
+            This HTML file is a template.
+            If you open it directly in the browser, you will see an empty page.
+            You can add webfonts, meta tags, or analytics to this file.
+            The build step will place the bundled scripts into the <body> tag.
+            To begin the development, run "npm start" or "yarn start".
+            To create a production bundle, use "npm run build" or "yarn build".
+            -->
 
+</body>
 
-
-
-
-{% endblock body %}
+</html>

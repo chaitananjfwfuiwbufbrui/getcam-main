@@ -8,7 +8,7 @@ class Profile(models.Model):
 
     id_proof = models.IntegerField( unique=True,default=000000)
     profile_verified = models.BooleanField(default=False)
-
+    
     phone_number = PhoneNumberField(null=True, blank=False, unique=True)
     phone_verified = models.BooleanField(default=False)
 

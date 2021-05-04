@@ -1,79 +1,84 @@
-{% extends "base.html" %}
+ {% load static %}
+<!DOCTYPE html>
+<html lang="en">
 
-{% block body %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <link rel="stylesheet" href="{% static 'index.css' %}">
+</head>
 
-<div class="py-5 cover my-5 h-75" style="">
-    <div class="container shadow-lg cover">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="row">
-                    <div class="col-md-6"><img class="img-fluid d-block mx-auto"
-                            src="https://img.freepik.com/free-vector/authentication-concept-illustration_114360-2168.jpg?size=338&amp;ext=jpg">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="row">
-                                    <div class="col-md-6"><img class="img-fluid d-block mx-auto"
-                                            src="https://lwstatic-a.akamaihd.net/kb/wp-content/uploads/2019/07/ssl-security-plan.png"
-                                            width="160"></div>
-                                    <div class="col-md-6"><img class="img-fluid d-block mx-auto"
-                                            src="https://www.freepngimg.com/download/bitcoin/59558-cryptocurrency-logo-blockchain-bitcoin-cash-png-download-free.png"
-                                            width="90"></div>
+<body>
+
+
+    <div class="py-5 cover my-5 h-75" style="">
+        <div class="container shadow-lg cover">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-6"><img class="img-fluid d-block mx-auto" src="https://img.freepik.com/free-vector/authentication-concept-illustration_114360-2168.jpg?size=338&amp;ext=jpg">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="row">
+                                        <div class="col-md-6"><img class="img-fluid d-block mx-auto" src="https://lwstatic-a.akamaihd.net/kb/wp-content/uploads/2019/07/ssl-security-plan.png" width="160"></div>
+                                        <div class="col-md-6"><img class="img-fluid d-block mx-auto" src="https://www.freepngimg.com/download/bitcoin/59558-cryptocurrency-logo-blockchain-bitcoin-cash-png-download-free.png" width="90"></div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 align-items-center justify-content-start">
-                        <div class="row">
-                            <div class="col-md-12">
+                        <div class="col-md-6 align-items-center justify-content-start">
+                            <div class="row">
+                                <div class="col-md-12">
+                                </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-12" style="margin-top:15%;">
+                            <div class="row">
+                                <div class="col-md-12" style="margin-top:15%;">
 
 
 
 
-                                {% if otp %}
-                                <form action="{% url 'verify-number' %}" id="c_form-h" method="post">
+                                    {% if otp %}
+                                    <form action="{% url 'verify-number' %}" id="c_form-h" method="post">
 
-                                    {% csrf_token %}
-                                    <div class="form-group row"> <label for="inputpasswordh"
-                                            class="col-form-label col-3 col-form-label-lg">Otp </label>
-                                        <div class="col-10 d-flex">
-                                            <input type="number" class="form-control d-flex" name="otp"
-                                                placeholder="Enter yor otp" required="">
+                                        {% csrf_token %}
+                                        <div class="form-group row"> <label for="inputpasswordh" class="col-form-label col-3 col-form-label-lg">Otp </label>
+                                            <div class="col-10 d-flex">
+                                                <input type="number" class="form-control d-flex" name="otp" placeholder="Enter yor otp" required="">
+                                            </div>
+
                                         </div>
 
-                                    </div>
 
-
-                                    <button type="submit" value="submit" class="btn text-body btn-secondary"><b><b
+                                        <button type="submit" value="submit" class="btn text-body btn-secondary"><b><b
                                                 class="text-white">Verify me</b></b></button>
-                                </form>
+                                    </form>
 
-                                {% else %}
+                                    {% else %}
 
-                                <form method="post" id="c_form-h" enctype="multipart/form-data">
+                                    <form method="post" id="c_form-h" enctype="multipart/form-data">
 
-                                    <div class="form-group row"> <label for="inputmailh"
-                                            class="col-form-label col-form-label-lg col-4">Phone Number</label>
-                                        <div class="col-10">
+                                        <div class="form-group row"> <label for="inputmailh" class="col-form-label col-form-label-lg col-4">Phone Number</label>
+                                            <div class="col-10">
 
-                                            {{ profile_form.phone_number }}
+                                                {{ profile_form.phone_number }}
+                                            </div>
                                         </div>
-                                    </div>
 
 
-                                    <div hidden>
+                                        <div hidden>
 
-                                        {{ profile_form.otp }}
-                                    </div>
-                                    {% csrf_token %}
-                                    
-                                    <button type="submit" value="submit" class="btn text-body btn-secondary"><b><b
+                                            {{ profile_form.otp }}
+                                        </div>
+                                        {% csrf_token %}
+
+                                        <button type="submit" value="submit" class="btn text-body btn-secondary"><b><b
                                                 class="text-white">Verify me</b></b></button>
-                                </form>
-                                {% endif %}
+                                    </form>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -81,5 +86,6 @@
             </div>
         </div>
     </div>
-</div>
-{% endblock body %}
+</body>
+
+</html>

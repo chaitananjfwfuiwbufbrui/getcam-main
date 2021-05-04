@@ -19,61 +19,30 @@ from main.pricealgo import *
 
 from datetime import datetime ,timedelta,date
 import threading
-
+from django.views.decorators.csrf import csrf_exempt
+from django.http import QueryDict
+import json
 
 def home(request):
-    popup = True
-      
+    
     if request.user.is_authenticated:
-        # creating profile for people who logged in by facebook
-        Profile.objects.get_or_create(user = request.user)
-
-        # merchant account stuff
-
-        group = None
-        merchant = False
-       
-        user_name = request.user
-        
-        if request.user.groups.exists():
-            # extracting the account detailes for view
-            group = request.user.groups.all()[0].name
-            if group == 'merchant':
-                
-                merchant = True
-                
-        # for recommandation stuff  
-        now = datetime.now()
-        last = date.today() - timedelta(days=30)
-        timestamp = datetime.date(now)
-
-            
-            
-        order ,created = Order.objects.get_or_create(customer=user_name,complete=False)
-        items = order.orderitems_set.all()
-        cartitems = order.get_cart_item
-
-        latest = products.objects.filter(pub_date__range=[last, timestamp])
-        # <-------products extraction ------->
-        # <-------here we need   a recommendation system ------->
-
-        dataa = products.objects.all()           
-                    
-        context = {'dataa' : dataa,"latest":latest,'cartitems':cartitems,'merchant':merchant,"popup":popup}
-    else:
-
+        Profile.objects.get_or_create(user=request.user)
         if request.method =="POST":
-            close = request.POST['close']
-            popup = False
-            print(close)
-            
-            
-        latest = products.objects.filter(pub_date__range=["2020-09-17", "2021-12-25"])
-            
-        dataa = products.objects.all()
-        context = {'dataa' : dataa,"latest":latest,"popup":popup}
+            # print("ASDsd")
+            sos = request.POST.dict()
+            # sis = location(user=request.user)
+            # myDict = json.loads(sos)
+            # kitt = dict(myDict)
+
+            # # sos = myDict
+            # # sos= pickle.load(request.POST)
+            # print(kitt,myDict,type(request.POST))
+            print(str(sos.keys()))
+            return JsonResponse("revived babaie",safe=False)
+    dataa = products.objects.all()
+    context = {'dataa' : dataa}
         
-    return render(request,'html/main/index.html',context)
+    return render(request,'phone/index.html',context)
 
 def test(request):
     return render(request,'html/main/test.html')
@@ -127,7 +96,8 @@ def productsss(request):
         
     return render(request,'html/main/gear.html',context)
 
-
+def products_fetch(request):
+        return JsonResponse(les,safe=False)
 
 def search(request):
     if 'term' in request.GET:
@@ -137,7 +107,7 @@ def search(request):
         for i in qs:
                 
             titles.append(i.product_name)
-
+        print(titles)
         return JsonResponse(titles,safe=False)
 
     if request.method =="POST":
@@ -146,7 +116,7 @@ def search(request):
                 dataa = products.objects.filter(product_name = name)
 
                 context = {'dataa' : dataa}
-                return render(request,'html/main/gear.html',context)        
+                return render(request,'phone/index.html',context)        
     return render(request,'test.html')
 
 
@@ -176,149 +146,56 @@ def review(request,slug):
                 print("done for the data")
     return redirect(f"/single/{slug[:-1]}")
 
+    
+
+def profile_and_phnumberchecker(us):
+        user_of = Profile.objects.get(user=us)
+        x = False 
+        if user_of.phone_verified and user_of.profile_verified :
+
+
+           
+            x = True
+            return x
+        else:
+            return x
+def render_page(request,us,fails):
+            user_of = Profile.objects.get(user=us)
+            if user_of.phone_verified is  False:
+
+                messages.info(request,f"verify your phone number  {fails}")
+                return redirect("/auth/phone")
+            if user_of.profile_verified is  False:
+
+                messages.info(request,f"verify your  profile {fails}")
+                return redirect('adhar')
+
 
 def singleproduct(request,slug):
-    if request.user.is_authenticated:
+    
         single = products.objects.filter(slug=slug).first()
         customer = request.user
-        order ,created = Order.objects.get_or_create(customer=customer,complete=False)
-        items = order.orderitems_set.all()
-        cartitems = order.get_cart_item
-        days = 1
+        providers = single.provider
+        provider_data = Profile.objects.filter(user=providers).first()
+        images_fieds = images_fiels.objects.filter(product=single)
         if request.method =="POST":
-            expire = request.POST['exper']
-            arrival = request.POST['arrival']
-            days = (int(expire[3:5]) - int(arrival[3:5])) + 1
-            
-        #algo for pricing 
-        single = products.objects.filter(slug=slug).first()
-        prize = model1(single.prize,days)
-        single_prize = single.prize * days
-        imageya = images_fiels.objects.filter(product = single)
-        def date_convetor(date):
+            if profile_and_phnumberchecker(request.user):
+                # messages.success(request, "please verify your phone number")
+                slug = request.POST['product_name']
+                
+                single = products.objects.filter(slug=slug).first()
 
-            s = str(date)
-            a = s.split("-")
-            xz =  [int(s) for s in a] 
-            return xz[0],xz[1],xz[2]
-        # print(date_convetor(single.pub_date),type(date_convetor(single.pub_date)))
-        
-        from datetime import date, timedelta
-        isi = date_convetor(single.pub_date)
-        esi = date_convetor(single.expire_date)
-        sdate = date(isi[0],isi[1],isi[2])  # start date
-        edate = date(esi[0],esi[1],esi[2])   # end date
+                sos = requested_delivary(product=single,customer=request.user)
+                sos.save()
+            else:
+                
+                return render_page(request, request.user, "ass")
+                print("ASDSDSDASDS")
 
-        delta = edate - sdate   
-        
-        
-        # as timedelta
-        availbe_dates_list = []
+        context = {'single' : single,"providers":provider_data,"images":images_fieds}
+        return render(request,'phone/singleproduct.html',context)
 
-        # #prize chart
-        s_no = [1,2,3,4,5,6,7]
-        
-
-        for i in s_no:
-            filled = model1(single.prize,i)
-            org = single.prize*i
-            
-            prize_chart.objects.get_or_create(product_slug = single,day = i,orginal_prize =org ,disccount=filled[0] , prize =filled[2] )
-
-        # <______done _________>
-
-        checkone  = prize_chart.objects.filter(product_slug = single)
-        print(checkone.reverse()[0],"sc")
-        ses = checkone.order_by('-id')[:7]
-        
-        # print(sos,type(sos))
-        for i in range(delta.days + 1):
-            day = sdate + timedelta(days=i)
-            sos = str(day)
-            k = sos[8:] + sos[4:8] + sos[:4]
-            
-            availbe_dates_list.append(k)
-      
-
-
-        all_obj = products.objects.filter(product_name=single.product_name)
-
-        
-        #algo for pricing ^^^^^^
-        
-
-
-
-
-        #cart check 
-        orde = Order.objects.filter(customer = customer).first()
-        prod = Orderitems.objects.filter(order = orde)
-        already_ther = False
-        for i in prod:
-            if i.product.slug == slug:
-
-                already_ther = True
-            
-
-        reviews =reviews_of_product.objects.filter(product_slug=single)
-        faq =faq_of_product.objects.filter(product_slug=single)
-        print(faq)
-        reviews_count =True
-        if len(reviews) == 0:
-            
-            reviews_count = False
-
-
-        prod = products.objects.filter(sub_category=single.sub_category)
-        subheading = products.objects.filter(category=single.category)
-        
-        removelis = [single.product_name]
-        new_list = []
-        newcat = []
-        #filtering single product from our sub catagiory set
-        for i in prod:
-            if not i.product_name in removelis:
-                new_list.append(i)
-        #filtering single product from our sub catagiory set            
-        for s in subheading:
-            if not s.product_name in removelis:
-                newcat.append(s)
-        #filtering sub catagiory  product from our catagiory set
-        for q in new_list:
-            if q in newcat:
-                newcat.remove(q)
-        
-        context = {'single' : single,"faq":faq,"reviews_count":reviews_count,"review_obj":reviews,"prod":new_list,"catagory":newcat,'cartitems':cartitems,"imageya":imageya,"all_obj":all_obj,"already_ther":already_ther,'prize':ceil(prize[0]),'discount': prize[2],'availbe_dates_list':availbe_dates_list,'days':days,'checkone':ses,'single_prize':single_prize}
-        return render(request,'html/main/singleproduct.html',context)
-
-    else:
-        single = products.objects.filter(slug=slug).first()
-        imageya = images_fiels.objects.filter(product = single)
-        days = 1
-        prize = model1(single.prize,days)
-        # print(prize[2],type(prize))
-        
-        prod = products.objects.filter(sub_category=single.sub_category)
-        subheading = products.objects.filter(category=single.category)
-        
-        removelis = [single.product_name]
-        new_list = []
-        newcat = []
-        #filtering single product from our sub catagiory set
-        for i in prod:
-            if not i.product_name in removelis:
-                new_list.append(i)
-        #filtering single product from our sub catagiory set            
-        for s in subheading:
-            if not s.product_name in removelis:
-                newcat.append(s)
-        #filtering sub catagiory  product from our catagiory set
-        for q in new_list:
-            if q in newcat:
-                newcat.remove(q)
-        
-        context = {'single' : single,"prod":new_list,"catagory":newcat,"imageya":imageya,'prize':ceil(prize[0]),'discount': prize[2]}
-        return render(request,'html/main/singleproduct.html',context)
+  
 
 def provider(request):
     if request.method =="POST":
@@ -455,30 +332,6 @@ def testcheck(request):
 
     
     return render(request,'html/main/test2.html')
-
-    
-
-def profile_and_phnumberchecker(request,us,succes):
-        user_of = Profile.objects.get(user=us)
-        x = False 
-        if user_of.phone_verified and user_of.profile_verified :
-
-
-            messages.success(request,f"{succes}!!")
-            x = True
-            return x
-        else:
-            return x
-def render_page(request,us,fails):
-            user_of = Profile.objects.get(user=us)
-            if user_of.phone_verified is  False:
-
-                messages.info(request,f"verify your phone number  {fails}")
-                return redirect("/auth/phone")
-            if user_of.profile_verified is  False:
-
-                messages.info(request,f"verify your  profile {fails}")
-                return redirect('adhar')
 
 
 def email_subscribe(request):

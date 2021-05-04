@@ -2,13 +2,17 @@ from django import forms
 from django.contrib.auth.models import User
 from .models import Profile
 class loginform(forms.Form):
-    username = forms.CharField()
-    password = forms.CharField(widget=forms.PasswordInput)
+    username = forms.CharField(widget=forms.Textarea(attrs={'placeholder': 'Enter username',}))
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'placeholder': 'Enter password'}))
 
 
 class  UserRegistrationForm(forms.ModelForm):
-    password = forms.CharField(label = 'Password',widget=forms.PasswordInput)
-    password2 = forms.CharField(label = 'Repeat Password',widget=forms.PasswordInput)
+    first_name = forms.CharField(label = 'username', widget=forms.Textarea(attrs={'placeholder': 'Enter your name',}),required=True)
+    username = forms.CharField(label = 'username', widget=forms.Textarea(attrs={'placeholder': 'Enter username',}),required=True)
+    email = forms.CharField(label = 'email', widget=forms.Textarea(attrs={'placeholder': 'Enter Email'}),required=True)
+    phonenumber = forms.CharField(label = 'email', widget=forms.Textarea(attrs={'placeholder': 'Enter phonenumber'}),required=True)
+    password = forms.CharField(label = 'Password', widget=forms.PasswordInput(attrs={'placeholder': 'Enter password'}),required=True)
+    password2 = forms.CharField(label = 'Repeat Password',widget=forms.PasswordInput(attrs={'placeholder': 'Re-Enter password'}),required=True)
     class Meta:
         model = User
         fields = ('username', 'email','first_name')
