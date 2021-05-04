@@ -23,6 +23,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.http import QueryDict
 import json
 
+from authentications.otp import send_sms,gen_otp,sms_sender
 def home(request):
     
     if request.user.is_authenticated:
@@ -30,7 +31,8 @@ def home(request):
         if request.method =="POST":
             # print("ASDsd")
             sos = request.POST.dict()
-            # sis = location(user=request.user)
+            sis = location(user=request.user,location=sos)
+            sis.save()
             # myDict = json.loads(sos)
             # kitt = dict(myDict)
 
@@ -174,20 +176,31 @@ def render_page(request,us,fails):
 def singleproduct(request,slug):
     
         single = products.objects.filter(slug=slug).first()
+        sins = single.view_count
+        sins += 1
+        single.view_count = sins
+        single.save()
         customer = request.user
         providers = single.provider
+        product_name = single.product_name
         provider_data = Profile.objects.filter(user=providers).first()
         images_fieds = images_fiels.objects.filter(product=single)
         if request.method =="POST":
             if profile_and_phnumberchecker(request.user):
                 # messages.success(request, "please verify your phone number")
+                messages.error(request, "you recived a call from vendor")
                 slug = request.POST['product_name']
                 
                 single = products.objects.filter(slug=slug).first()
-
+                user = Profile.objects.filter(user=customer).first()
+                messages_otp = f'''
+                you  have a order from {user.user} \n phone:  {user.phone_number} \n order on : {product_name}   \n                 
+                '''
+                sms_sender(provider_data.phone_number,messages_otp)
                 sos = requested_delivary(product=single,customer=request.user)
                 sos.save()
             else:
+                messages.error(request, "please verify your number")
                 
                 return render_page(request, request.user, "ass")
                 print("ASDSDSDASDS")

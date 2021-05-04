@@ -13,6 +13,7 @@ class subscribedmaile(models.Model):
     subscribed_date = models.DateTimeField(auto_now_add=True)
 # Create your models here.
 class products(models.Model):
+    view_count = models.IntegerField(default=0)
     provider = models.ForeignKey(User,on_delete=models.SET_NULL,blank=True,null=True)
     product_id = models.AutoField
     product_name = models.CharField( max_length=50)
@@ -32,7 +33,9 @@ class products(models.Model):
 
     def __str__(self):
         return self.product_name +"         catagiory:   " +self.category + "subcatagiry :   "+ self.sub_category
-
+class location(models.Model):
+    user  = models.ForeignKey(User,on_delete=models.SET_NULL,blank=True,null=True)
+    location =models.CharField(max_length=300)
 
 class images_fiels(models.Model):
     product = models.ForeignKey(products,on_delete=models.SET_NULL,blank=True,null=True)

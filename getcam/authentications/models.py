@@ -13,6 +13,7 @@ class Profile(models.Model):
     phone_verified = models.BooleanField(default=False)
 
     otp = models.IntegerField(default=000000)
-
+    address = models.CharField( max_length=500,default="")
+    timings = models.CharField( max_length=500,default="")
     def __str__(self):
         return f"profile for user {self.user.username}"

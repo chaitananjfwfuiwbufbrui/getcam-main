@@ -6,6 +6,7 @@ admin.site.register(contact)
 
 # admin.site.register(products)
 
+admin.site.register(location)
 admin.site.register(Orderitems)
 admin.site.register(requested_delivary)
 
